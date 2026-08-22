@@ -154,12 +154,12 @@ function App() {
         }}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
-        className="fixed top-0 left-0 w-full p-4 md:p-6 flex justify-end items-center z-50 bg-[#fff0f3]/90 backdrop-blur-md"
+        className="fixed top-0 left-0 w-full p-4 md:p-6 flex justify-between sm:justify-end items-center z-50 bg-[#fff0f3]/90 backdrop-blur-md"
       >
+        <span className="text-[10px] md:text-sm font-bold text-pink-500 uppercase tracking-widest sm:mr-4">
+          Skipping the game?
+        </span>
         <div className="flex items-center gap-2 md:gap-4">
-          <span className="text-xs md:text-sm font-bold text-pink-500 hidden sm:inline-block mr-2 uppercase tracking-widest">
-            Skipping the game?
-          </span>
           <a href="/alexandra_munteanu_resume.pdf" download="Alexandra_Munteanu_Resume.pdf" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="Resume">
             <FileText className="w-5 h-5" />
             <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Resume</span>
@@ -235,6 +235,9 @@ function App() {
           <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
             I am a <span className="text-pink-500 font-medium">computer engineering student</span> bridging the gap between <span className="text-pink-500 font-medium">hardware logic</span> and <span className="text-pink-500 font-medium">web creativity</span>. I have turned my background, projects, and qualifications into an interactive space.
             <span className="block mt-4 text-pink-500 font-medium">Step inside and take a look around!</span>
+            <span className="block mt-2 text-sm text-gray-400 italic sm:hidden">
+              (For the best experience, check this out on desktop!)
+            </span>
           </p>
         </motion.div>
 
@@ -258,14 +261,14 @@ function App() {
       </section>
 
       {/* SECTION 2: THE ROOM */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center p-4">
+      <section className="relative min-h-screen flex flex-col items-center justify-start pt-16 sm:justify-center sm:pt-4 sm:py-8 overflow-hidden">
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="w-full max-w-7xl text-center mb-8"
+          className="w-full max-w-7xl text-center mb-4 sm:mb-6 px-4 sm:px-0 relative z-20"
         >
           <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-800">
             Find the <span className="text-pink-500">5 objects</span> to discover <span className="text-pink-500">my story</span>.
@@ -273,23 +276,25 @@ function App() {
         </motion.div>
 
         {/* Container for the room */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="relative w-full max-w-7xl aspect-video bg-transparent"
-        >
+        <div className="w-full flex items-center justify-center scale-[1.4] sm:scale-100 origin-center py-12 sm:py-0 transition-transform duration-300">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="relative w-full max-w-7xl aspect-video bg-transparent shrink-0 flex-none"
+          >
 
-          {/* Game Counter */}
+          {/* Desktop Game Counter */}
           <AnimatePresence>
             {foundObjects.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 z-30"
-              >
+              <div className="hidden sm:flex absolute bottom-6 left-6 z-30 w-max pointer-events-none">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  className="pointer-events-auto"
+                >
                 <div className="bg-white/50 backdrop-blur-sm border border-pink-200 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-md flex items-center gap-2 hover:bg-white/80 transition-colors cursor-default">
                   <span className="text-[10px] sm:text-xs uppercase tracking-widest font-mono text-pink-500 font-bold">
                     Objects Found:
@@ -307,6 +312,7 @@ function App() {
                   </button>
                 </div>
               </motion.div>
+              </div>
             )}
           </AnimatePresence>
 
@@ -404,6 +410,39 @@ function App() {
           </div>
 
         </motion.div>
+        </div>
+
+        {/* Mobile Game Counter */}
+        <AnimatePresence>
+          {foundObjects.length > 0 && (
+            <div className="sm:hidden flex justify-center w-full mt-8 relative z-30 pointer-events-none">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                className="pointer-events-auto"
+              >
+                <div className="bg-white/50 backdrop-blur-sm border border-pink-200 px-3 py-1.5 rounded-full shadow-md flex items-center gap-2 hover:bg-white/80 transition-colors cursor-default">
+                  <span className="text-[10px] uppercase tracking-widest font-mono text-pink-500 font-bold">
+                    Objects Found:
+                  </span>
+                  <span className="text-xs font-bold text-gray-900 bg-white px-2 py-0.5 rounded-full shadow-sm border border-pink-200">
+                    {foundObjects.length} / 5
+                  </span>
+                  <button
+                    onClick={handleResetGame}
+                    className="p-1 text-gray-400 hover:text-pink-600 transition-colors rounded-full hover:bg-pink-100/50 cursor-pointer ml-0.5"
+                    title="Reset game progress"
+                    aria-label="Reset progress"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
       </section>
 
       {/* MODALS */}
@@ -1307,6 +1346,16 @@ function App() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* FOOTER */}
+      <footer className="w-full py-8 text-center bg-[#fff0f3] flex flex-col items-center justify-center gap-2 relative z-10 border-t border-pink-100/50">
+        <p className="text-sm font-medium text-gray-500 tracking-wide">
+          Designed & Built by <span className="text-pink-500 font-bold">Alexandra Munteanu</span>
+        </p>
+        <p className="text-xs text-gray-400 font-mono">
+          © {new Date().getFullYear()} Crafted with React, Tailwind CSS, and Framer Motion
+        </p>
+      </footer>
 
     </div>
   )
