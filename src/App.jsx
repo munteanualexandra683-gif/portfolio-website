@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap } from 'lucide-react';
+import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink } from 'lucide-react';
 
 function App() {
   const { scrollY } = useScroll();
@@ -157,6 +157,7 @@ function App() {
           <div
             className="interactive-object"
             style={{ left: '64.69%', top: '35.28%', width: '6.20%', height: '13.70%' }}
+            onClick={() => setActiveModal('projects')}
           >
             {/* Un-comment and update path when you have the PC image */}
             <img src="/pictures/pc.png?v=2" alt="PC" className="w-full h-full object-contain" />
@@ -201,7 +202,7 @@ function App() {
                   <GraduationCap className="w-6 h-6" />
                   <h3 className="font-display text-xl font-bold tracking-wide uppercase">My Education</h3>
                 </div>
-                <button 
+                <button
                   onClick={() => setActiveModal(null)}
                   className="p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-200 rounded-full transition-colors"
                 >
@@ -237,6 +238,171 @@ function App() {
                     </span>
                   </div>
                 </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {activeModal === 'projects' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-gray-900/40 backdrop-blur-sm"
+            onClick={() => setActiveModal(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="bg-[#fff0f3] w-full max-w-5xl max-h-[90vh] flex flex-col rounded-2xl shadow-2xl overflow-hidden border border-pink-200 cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="bg-pink-100/50 px-6 py-4 flex justify-between items-center border-b border-pink-100 shrink-0">
+                <div className="flex items-center gap-3 text-pink-600">
+                  <Monitor className="w-6 h-6" />
+                  <h3 className="font-display text-xl font-bold tracking-wide uppercase">My Projects</h3>
+                </div>
+                <button
+                  onClick={() => setActiveModal(null)}
+                  className="p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-200 rounded-full transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Modal Body (Scrollable) */}
+              <div className="p-6 md:p-8 text-left overflow-y-auto space-y-12">
+
+                {/* PROJECT 1 */}
+                <div className="flex flex-col lg:flex-row gap-8">
+                  {/* Left Column: Text */}
+                  <div className="flex-1 space-y-4">
+                    <h4 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                      <Cpu className="w-6 h-6 text-pink-500" />
+                      Full-Stack IoT Environmental Monitor
+                    </h4>
+                    <p className="text-gray-600 font-medium leading-relaxed">
+                      An end-to-end telemetry system built from scratch to monitor real-time voltage and temperature.
+                    </p>
+
+                    {/* Tech Badges */}
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      {['C++', 'ESP32', 'Python / Flask', 'Raspberry Pi', 'SQLite', 'HTML/CSS'].map(tech => (
+                        <span key={tech} className="bg-white border border-pink-100 shadow-sm text-pink-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="space-y-4 pt-4 border-t border-pink-100/60">
+                      <div>
+                        <span className="font-bold text-gray-800 text-sm uppercase tracking-wider block mb-1">Hardware & PCB</span>
+                        <p className="text-gray-600 text-sm leading-relaxed">Designed a custom PCB featuring an I2C temperature sensor, voltage divider, and local alert system (LEDs/Buzzer).</p>
+                      </div>
+                      <div>
+                        <span className="font-bold text-gray-800 text-sm uppercase tracking-wider block mb-1">Firmware (ESP32)</span>
+                        <p className="text-gray-600 text-sm leading-relaxed">Programmed in C++ to filter analog noise and wirelessly transmit JSON payloads via HTTP POST over Wi-Fi.</p>
+                      </div>
+                      <div>
+                        <span className="font-bold text-gray-800 text-sm uppercase tracking-wider block mb-1">Backend & Database</span>
+                        <p className="text-gray-600 text-sm leading-relaxed">Deployed a Flask RESTful API on a Raspberry Pi paired with an SQLite database for persistent historical logging.</p>
+                      </div>
+                      <div>
+                        <span className="font-bold text-gray-800 text-sm uppercase tracking-wider block mb-1">Web Dashboard</span>
+                        <p className="text-gray-600 text-sm leading-relaxed">Developed a live, dynamic interface to visualize telemetry data across the local network in real-time.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column: Visuals */}
+                  <div className="lg:w-[45%] flex flex-col gap-4">
+                    <div className="aspect-video bg-white/60 rounded-xl border border-pink-100 shadow-sm flex items-center justify-center relative overflow-hidden group">
+                      <img 
+                        src="/pictures/firstpicturehardware.webp" 
+                        alt="Dashboard visualization" 
+                        className="w-full h-full object-cover" 
+                      />
+                    </div>
+                    <div className="aspect-video bg-white/60 rounded-xl border border-pink-100 shadow-sm flex items-center justify-center relative overflow-hidden group">
+                      <img 
+                        src="/pictures/secondpichardware.webp" 
+                        alt="Custom PCB design" 
+                        className="w-full h-full object-cover" 
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* PROJECT 2 */}
+                <div className="relative border-t border-pink-200 pt-12 pb-6">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#fff0f3] px-4 text-pink-400 text-sm font-mono tracking-widest uppercase font-bold">
+                    Project 02
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row gap-8">
+                    {/* Left Column: Text */}
+                    <div className="flex-1 space-y-4">
+                      <h4 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                        <Eye className="w-6 h-6 text-pink-500 shrink-0" />
+                        Real-Time Adaptive Web Interfaces
+                      </h4>
+                      <p className="text-gray-600 font-medium leading-relaxed">
+                        Co-developed for the Scientific Communication Session to challenge standard WCAG compliance limitations.
+                      </p>
+
+                      {/* Tech Badges */}
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        {['JavaScript', 'Python / Flask', 'Machine Learning (KNN)', 'Behavioral Analytics', 'Web Accessibility'].map(tech => (
+                          <span key={tech} className="bg-white border border-pink-100 shadow-sm text-pink-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="space-y-4 pt-4 border-t border-pink-100/60">
+                        <div>
+                          <span className="font-bold text-gray-800 text-sm uppercase tracking-wider block mb-1">Machine Learning Integration</span>
+                          <p className="text-gray-600 text-sm leading-relaxed">Engineered a full-stack system utilizing a K-Nearest Neighbors (KNN) classifier to predict and adapt to user accessibility needs in real-time.</p>
+                        </div>
+                        <div>
+                          <span className="font-bold text-gray-800 text-sm uppercase tracking-wider block mb-1">Behavioral Tracking</span>
+                          <p className="text-gray-600 text-sm leading-relaxed">Implemented low-level kinematic signal tracking (monitoring scroll speed, erratic clicks, and idle time) to dynamically shift UI layouts into specialized modes like Dyslexia or Focus views.</p>
+                        </div>
+                      </div>
+
+                      {/* Live Demo CTA */}
+                      <div className="pt-6">
+                        <a
+                          href="https://forma-accessibility-demo.onrender.com/"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-bold py-2.5 px-6 rounded-full transition-transform hover:-translate-y-0.5 shadow-md hover:shadow-lg"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Interactive Experience Demo
+                        </a>
+                        <p className="text-xs text-gray-500 mt-3 ml-2 max-w-sm">
+                          Interact directly with the page's content to watch the machine learning model adjust the UI based on your live behavior.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Right Column: Visuals */}
+                    <div className="lg:w-[45%] flex flex-col gap-4">
+                      <div className="aspect-video bg-white/60 rounded-xl border border-pink-100 shadow-sm flex items-center justify-center relative overflow-hidden group">
+                        <img 
+                          src="/pictures/websitepic.webp" 
+                          alt="Accessibility Demo UI" 
+                          className="w-full h-full object-cover object-top" 
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </motion.div>
           </motion.div>
