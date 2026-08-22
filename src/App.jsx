@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart, Download, Send, ArrowLeft, CheckCircle, Copy } from 'lucide-react';
+import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart, Download, Send, ArrowLeft, CheckCircle, Copy, RotateCcw } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 function App() {
@@ -56,6 +56,7 @@ function App() {
       const result = await response.json();
       if (result.success) {
         setFormStatus("success");
+        setFormData({ name: "", email: "", message: "" });
       } else {
         console.error("Web3Forms Error:", result);
         setFormStatus("error");
@@ -222,7 +223,7 @@ function App() {
           className="max-w-3xl"
         >
           <span className="text-xs md:text-sm uppercase tracking-widest font-mono text-pink-500 font-bold mb-3 block">
-            [ Player: Alexandra Munteanu ]
+            [ Alexandra Munteanu ]
           </span>
           <h1 className="font-display text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-6 drop-shadow-sm select-none">
             {"Ready to explore?".split(" ").map((word, idx) => (
@@ -296,6 +297,14 @@ function App() {
                   <span className="text-xs sm:text-sm font-bold text-gray-900 bg-white px-2 py-0.5 rounded-full shadow-sm border border-pink-200">
                     {foundObjects.length} / 5
                   </span>
+                  <button
+                    onClick={handleResetGame}
+                    className="p-1 text-gray-400 hover:text-pink-600 transition-colors rounded-full hover:bg-pink-100/50 cursor-pointer ml-0.5"
+                    title="Reset game progress"
+                    aria-label="Reset progress"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                  </button>
                 </div>
               </motion.div>
             )}
@@ -1157,13 +1166,31 @@ function App() {
                             <X className="w-16 h-16 text-red-500" />
                           </motion.div>
                           <h3 className="text-xl font-bold text-gray-900">Oops!</h3>
-                          <p className="text-sm text-gray-500">Something went wrong sending the message. Please check the developer console for details.</p>
-                          <button
-                            onClick={() => setFormStatus("idle")}
-                            className="mt-2 px-6 py-2 bg-pink-100 text-pink-600 font-bold rounded-full hover:bg-pink-200 transition-colors"
-                          >
-                            Try Again
-                          </button>
+                          <p className="text-sm text-gray-500">Something went wrong sending your message. Please try again or copy my email address directly!</p>
+                          <div className="flex items-center gap-3 mt-2">
+                            <button
+                              onClick={() => setFormStatus("idle")}
+                              className="px-5 py-2 bg-pink-100 text-pink-600 font-bold text-sm rounded-full hover:bg-pink-200 transition-colors"
+                            >
+                              Try Again
+                            </button>
+                            <button
+                              onClick={handleCopyEmail}
+                              className="px-5 py-2 border border-pink-200 text-pink-600 font-bold text-sm rounded-full hover:bg-pink-50 transition-colors flex items-center gap-2 cursor-pointer"
+                            >
+                              {copiedEmail ? (
+                                <>
+                                  <CheckCircle className="w-4 h-4 text-green-500" />
+                                  Copied!
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="w-4 h-4" />
+                                  Copy Email
+                                </>
+                              )}
+                            </button>
+                          </div>
                         </div>
                       ) : (
                         <form onSubmit={handleContactSubmit} className="flex flex-col gap-3 h-full">
