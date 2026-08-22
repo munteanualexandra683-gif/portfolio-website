@@ -1,12 +1,58 @@
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { useState } from 'react';
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import { ChevronDown, Code, Briefcase, Mail, FileText } from 'lucide-react';
 
 function App() {
+  const { scrollY } = useScroll();
+  const [hidden, setHidden] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() || 0;
+    if (latest > previous && latest > 100) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  });
+
   // Missing PC and "Welcome" speech bubble images, so we're using a placeholder text/style.
   // The positioning uses percentage-based relative to the container for responsiveness.
 
   return (
     <div className="bg-[#fff0f3] w-full text-gray-800">
+
+      {/* HEADER */}
+      <motion.header
+        variants={{
+          visible: { y: 0, opacity: 1 },
+          hidden: { y: "-100%", opacity: 0 }
+        }}
+        animate={hidden ? "hidden" : "visible"}
+        transition={{ duration: 0.35, ease: "easeInOut" }}
+        className="fixed top-0 left-0 w-full p-4 md:p-6 flex justify-end items-center z-50 bg-[#fff0f3]/90 backdrop-blur-md"
+      >
+        <div className="flex items-center gap-2 md:gap-4">
+          <span className="text-xs md:text-sm font-bold text-pink-500 hidden sm:inline-block mr-2 uppercase tracking-widest">
+            Skipping the game?
+          </span>
+          <a href="#" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="Resume">
+            <FileText className="w-5 h-5" />
+            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Resume</span>
+          </a>
+          <a href="https://github.com" target="_blank" rel="noreferrer" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="GitHub">
+            <Code className="w-5 h-5" />
+            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">GitHub</span>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="LinkedIn">
+            <Briefcase className="w-5 h-5" />
+            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">LinkedIn</span>
+          </a>
+          <a href="mailto:your.email@example.com" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="Email">
+            <Mail className="w-5 h-5" />
+            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Email</span>
+          </a>
+        </div>
+      </motion.header>
 
       {/* SECTION 1: HERO */}
       <section className="relative min-h-screen flex flex-col items-center justify-center p-6 text-center">
@@ -17,10 +63,14 @@ function App() {
           className="max-w-3xl"
         >
           <span className="text-xs md:text-sm uppercase tracking-widest font-mono text-pink-500 font-bold mb-3 block">
-            [ Player 1: Alexandra Munteanu ]
+            [ Player: Alexandra Munteanu ]
           </span>
-          <h1 className="font-display text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-6 drop-shadow-sm">
-            Ready to explore?
+          <h1 className="font-display text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-6 drop-shadow-sm select-none">
+            {"Ready to explore?".split(" ").map((word, idx) => (
+              <span key={idx} className="hover:text-pink-500 transition-colors duration-200 inline-block mr-[0.25em] last:mr-0 cursor-default">
+                {word}
+              </span>
+            ))}
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
             I'm a computer engineering student bridging the gap between hardware logic and web creativity. I've turned my background, projects, and qualifications into an interactive space. Click around to see for yourself.
