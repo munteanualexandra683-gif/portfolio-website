@@ -78,7 +78,7 @@ function App() {
           <span className="text-xs md:text-sm font-bold text-pink-500 hidden sm:inline-block mr-2 uppercase tracking-widest">
             Skipping the game?
           </span>
-          <a href="#" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="Resume">
+          <a href="/alexandra_munteanu_resume.pdf" download="Alexandra_Munteanu_Resume.pdf" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="Resume">
             <FileText className="w-5 h-5" />
             <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Resume</span>
           </a>
@@ -884,7 +884,7 @@ function App() {
             >
               <div className="bg-pink-100/50 px-6 py-4 flex justify-between items-center border-b border-pink-100">
                 <div className="flex items-center gap-3 text-pink-600">
-                  <span className="font-display text-xl font-bold tracking-wide uppercase">Contact & Socials</span>
+                  <span className="font-display text-xl font-bold tracking-wide uppercase">Contact</span>
                 </div>
                 <button
                   onClick={() => setActiveModal(null)}
@@ -937,6 +937,20 @@ function App() {
                     <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">munteanualexandra683@gmail.com</span>
                   </div>
                 </a>
+
+                <a
+                  href="/alexandra_munteanu_resume.pdf"
+                  download="Alexandra_Munteanu_Resume.pdf"
+                  className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
+                >
+                  <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                    <FileText className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900">Resume</h4>
+                    <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">Download PDF</span>
+                  </div>
+                </a>
               </div>
             </motion.div>
           </motion.div>
@@ -968,7 +982,7 @@ function App() {
                 <div className="mx-auto bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mb-3">
                   <span className="text-3xl">🏆</span>
                 </div>
-                <h3 className="font-display text-2xl font-bold tracking-wide uppercase text-gray-900">100% Unlocked</h3>
+                <h3 className="font-display text-2xl font-bold tracking-wide uppercase text-gray-900">Congratulations!</h3>
                 <p className="text-pink-500 font-bold mt-1">You found all the items!</p>
               </div>
 
