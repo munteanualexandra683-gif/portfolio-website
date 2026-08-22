@@ -1,11 +1,53 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart } from 'lucide-react';
+import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart, Download } from 'lucide-react';
+import confetti from 'canvas-confetti';
 
 function App() {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
+  const [foundObjects, setFoundObjects] = useState([]);
+  const [hasWon, setHasWon] = useState(false);
+
+  const handleObjectClick = (objectId) => {
+    setActiveModal(objectId);
+    if (objectId !== 'me' && !foundObjects.includes(objectId)) {
+      setFoundObjects(prev => [...prev, objectId]);
+    }
+  };
+
+  useEffect(() => {
+    if (foundObjects.length === 5 && !activeModal && !hasWon) {
+      setHasWon(true);
+      setActiveModal('victory');
+
+      const duration = 3 * 1000;
+      const end = Date.now() + duration;
+
+      const frame = () => {
+        confetti({
+          particleCount: 5,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#ec4899', '#3b82f6', '#fbcfe8', '#bfdbfe'] // Pink and Blue
+        });
+        confetti({
+          particleCount: 5,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#ec4899', '#3b82f6', '#fbcfe8', '#bfdbfe']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      };
+      frame();
+    }
+  }, [foundObjects.length, activeModal, hasWon]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
@@ -108,7 +150,7 @@ function App() {
           className="w-full max-w-7xl text-center mb-8"
         >
           <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-800">
-            Find the <span className="text-pink-500">4 objects</span> to discover <span className="text-pink-500">my story</span>.
+            Find the <span className="text-pink-500">5 objects</span> to discover <span className="text-pink-500">my story</span>.
           </h2>
         </motion.div>
 
@@ -121,6 +163,27 @@ function App() {
           className="relative w-full max-w-7xl aspect-video bg-transparent"
         >
 
+          {/* Game Counter */}
+          <AnimatePresence>
+            {foundObjects.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 z-30"
+              >
+                <div className="bg-white/50 backdrop-blur-sm border border-pink-200 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-md flex items-center gap-2 hover:bg-white/80 transition-colors cursor-default">
+                  <span className="text-[10px] sm:text-xs uppercase tracking-widest font-mono text-pink-500 font-bold">
+                    Objects Found:
+                  </span>
+                  <span className="text-xs sm:text-sm font-bold text-gray-900 bg-white px-2 py-0.5 rounded-full shadow-sm border border-pink-200">
+                    {foundObjects.length} / 5
+                  </span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Background Room */}
           <img
             src="/pictures/room.png"
@@ -132,7 +195,7 @@ function App() {
           <div
             className="interactive-object"
             style={{ left: '23.02%', top: '43.80%', width: '7.60%', height: '25.56%' }}
-            onClick={() => setActiveModal('plant')}
+            onClick={() => handleObjectClick('plant')}
           >
             <img src="/pictures/tree.png?v=2" alt="Plant" className="w-full h-full object-contain" />
           </div>
@@ -141,7 +204,7 @@ function App() {
           <div
             className="interactive-object"
             style={{ left: '51.20%', top: '30.56%', width: '9.58%', height: '12.13%' }}
-            onClick={() => setActiveModal('education')}
+            onClick={() => handleObjectClick('education')}
           >
             <img src="/pictures/shelf.png?v=2" alt="Bookshelf" className="w-full h-full object-contain" />
           </div>
@@ -150,7 +213,7 @@ function App() {
           <div
             className="interactive-object"
             style={{ left: '28.23%', top: '20.28%', width: '12.03%', height: '24.17%' }}
-            onClick={() => setActiveModal('posters')}
+            onClick={() => handleObjectClick('posters')}
           >
             <img src="/pictures/posters.png?v=2" alt="Certificates" className="w-full h-full object-contain" />
           </div>
@@ -159,7 +222,7 @@ function App() {
           <div
             className="interactive-object"
             style={{ left: '54.06%', top: '13.89%', width: '5.78%', height: '21.85%' }}
-            onClick={() => setActiveModal('board')}
+            onClick={() => handleObjectClick('board')}
           >
             <img src="/pictures/board.png" alt="Board" className="w-full h-full object-contain" />
           </div>
@@ -168,7 +231,7 @@ function App() {
           <div
             className="interactive-object"
             style={{ left: '64.69%', top: '35.28%', width: '6.20%', height: '13.70%' }}
-            onClick={() => setActiveModal('projects')}
+            onClick={() => handleObjectClick('projects')}
           >
             {/* Un-comment and update path when you have the PC image */}
             <img src="/pictures/pc.png?v=2" alt="PC" className="w-full h-full object-contain" />
@@ -178,7 +241,7 @@ function App() {
           <div
             className="interactive-object z-20"
             style={{ left: '47.66%', top: '41.02%', width: '8.91%', height: '37.59%' }}
-            onClick={() => setActiveModal('me')}
+            onClick={() => handleObjectClick('me')}
           >
             <img
               src="/pictures/me.png?v=2"
@@ -277,7 +340,7 @@ function App() {
                   <Briefcase className="w-6 h-6" />
                   <h3 className="font-display text-xl font-bold tracking-wide uppercase">Professional Experience</h3>
                 </div>
-                <button 
+                <button
                   onClick={() => setActiveModal(null)}
                   className="p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-200 rounded-full transition-colors"
                 >
@@ -287,7 +350,7 @@ function App() {
 
               {/* Modal Body */}
               <div className="p-6 md:p-8 text-left">
-                
+
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start border-b border-pink-100 pb-4 mb-4">
                   <div>
                     <h4 className="text-2xl font-bold text-gray-900 mb-1">
@@ -340,9 +403,9 @@ function App() {
               <div className="bg-pink-100/50 px-6 py-4 flex justify-between items-center border-b border-pink-100">
                 <div className="flex items-center gap-3 text-pink-600">
                   <FileText className="w-6 h-6" />
-                  <h3 className="font-display text-xl font-bold tracking-wide uppercase">Certifications & Learning</h3>
+                  <h3 className="font-display text-xl font-bold tracking-wide uppercase">Certifications</h3>
                 </div>
-                <button 
+                <button
                   onClick={() => setActiveModal(null)}
                   className="p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-200 rounded-full transition-colors"
                 >
@@ -352,7 +415,7 @@ function App() {
 
               {/* Modal Body */}
               <div className="p-6 md:p-8 text-left max-h-[75vh] overflow-y-auto custom-scrollbar">
-                
+
                 {/* Cert 1 */}
                 <div className="border-b border-pink-100 pb-5 mb-5">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
@@ -360,11 +423,11 @@ function App() {
                       <h4 className="text-xl font-bold text-gray-900">
                         Web Programming 101 Certificate
                       </h4>
-                      <span className="text-pink-500 font-bold">Issuer: Cisco</span>
+                      <span className="text-pink-500 font-bold">Cisco</span>
                     </div>
                     <div className="mt-1 sm:mt-0">
                       <span className="text-gray-600 bg-white/50 px-3 py-1 rounded-full text-xs border border-pink-100 shadow-sm font-mono tracking-tight">
-                        Issued: Dec 2025
+                        Dec 2025
                       </span>
                     </div>
                   </div>
@@ -393,11 +456,11 @@ function App() {
                       <h4 className="text-xl font-bold text-gray-900">
                         Cambridge English Level C2
                       </h4>
-                      <span className="text-pink-500 font-bold">Issuer: Cambridge University Press & Assessment</span>
+                      <span className="text-pink-500 font-bold">Cambridge University Press & Assessment</span>
                     </div>
                     <div className="mt-1 sm:mt-0">
                       <span className="text-gray-600 bg-white/50 px-3 py-1 rounded-full text-xs border border-pink-100 shadow-sm font-mono tracking-tight">
-                        Issued: Jun 2023
+                        Jun 2023
                       </span>
                     </div>
                   </div>
@@ -411,24 +474,45 @@ function App() {
                 {/* Upskilling */}
                 <div className="bg-pink-50/50 p-4 rounded-xl border border-pink-100">
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="bg-pink-500 text-white text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full">In Progress / Upskilling</span>
+                    <span className="bg-pink-500 text-white text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full">Upskilling</span>
                   </div>
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
                     <div>
                       <h4 className="text-lg font-bold text-gray-900">
                         Python Certification
                       </h4>
-                      <span className="text-pink-500 font-bold text-sm">Issuer: freeCodeCamp</span>
+                      <span className="text-pink-500 font-bold text-sm">freeCodeCamp</span>
                     </div>
                     <div className="mt-1 sm:mt-0">
                       <span className="text-pink-600 bg-pink-100 px-3 py-1 rounded-full text-xs font-mono tracking-tight font-bold">
-                        Status: Currently Working On
+                        Currently Working On
                       </span>
                     </div>
                   </div>
                   <div className="mt-3">
                     <p className="text-gray-700 text-sm leading-relaxed">
                       <span className="font-bold text-gray-900 mr-1">Goal:</span> Expanding backend, data structures, and automation skills to complement my Python/Django experience.
+                    </p>
+                  </div>
+
+                  <div className="w-full h-px bg-pink-200/50 my-5"></div>
+
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
+                    <div>
+                      <h4 className="text-lg font-bold text-gray-900">
+                        Learn React
+                      </h4>
+                      <span className="text-pink-500 font-bold text-sm">Codecademy</span>
+                    </div>
+                    <div className="mt-1 sm:mt-0">
+                      <span className="text-pink-600 bg-pink-100 px-3 py-1 rounded-full text-xs font-mono tracking-tight font-bold">
+                        Currently Working On
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      <span className="font-bold text-gray-900 mr-1">Goal:</span> Mastering component-based architecture, state management, and modern front-end workflows to build interactive web applications.
                     </p>
                   </div>
                 </div>
@@ -460,7 +544,7 @@ function App() {
                   <Heart className="w-6 h-6" />
                   <h3 className="font-display text-xl font-bold tracking-wide uppercase">Community & Leadership</h3>
                 </div>
-                <button 
+                <button
                   onClick={() => setActiveModal(null)}
                   className="p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-200 rounded-full transition-colors"
                 >
@@ -470,7 +554,7 @@ function App() {
 
               {/* Modal Body */}
               <div className="p-6 md:p-8 text-left max-h-[75vh] overflow-y-auto custom-scrollbar">
-                
+
                 {/* Role 1 */}
                 <div className="border-b border-pink-100 pb-5 mb-5">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
@@ -802,7 +886,7 @@ function App() {
                 <div className="flex items-center gap-3 text-pink-600">
                   <span className="font-display text-xl font-bold tracking-wide uppercase">Contact & Socials</span>
                 </div>
-                <button 
+                <button
                   onClick={() => setActiveModal(null)}
                   className="p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-200 rounded-full transition-colors"
                 >
@@ -811,10 +895,10 @@ function App() {
               </div>
 
               <div className="p-6 md:p-8 flex flex-col gap-4">
-                <a 
-                  href="https://github.com/munteanualexandra683-gif" 
-                  target="_blank" 
-                  rel="noreferrer" 
+                <a
+                  href="https://github.com/munteanualexandra683-gif"
+                  target="_blank"
+                  rel="noreferrer"
                   className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
                 >
                   <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
@@ -826,10 +910,10 @@ function App() {
                   </div>
                 </a>
 
-                <a 
-                  href="https://www.linkedin.com/in/alexandra-munteanu-5aa485291/" 
-                  target="_blank" 
-                  rel="noreferrer" 
+                <a
+                  href="https://www.linkedin.com/in/alexandra-munteanu-5aa485291/"
+                  target="_blank"
+                  rel="noreferrer"
                   className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
                 >
                   <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
@@ -841,8 +925,8 @@ function App() {
                   </div>
                 </a>
 
-                <a 
-                  href="mailto:munteanualexandra683@gmail.com" 
+                <a
+                  href="mailto:munteanualexandra683@gmail.com"
                   className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
                 >
                   <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
@@ -853,6 +937,57 @@ function App() {
                     <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">munteanualexandra683@gmail.com</span>
                   </div>
                 </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {activeModal === 'victory' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm"
+            onClick={() => setActiveModal(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 30 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="bg-[#fff0f3] w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden border border-pink-200 cursor-default text-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="bg-pink-100/50 px-6 py-6 border-b border-pink-100 relative">
+                <button
+                  onClick={() => setActiveModal(null)}
+                  className="absolute top-4 right-4 p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-200 rounded-full transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+                <div className="mx-auto bg-pink-100 w-16 h-16 rounded-full flex items-center justify-center mb-3">
+                  <span className="text-3xl">🏆</span>
+                </div>
+                <h3 className="font-display text-2xl font-bold tracking-wide uppercase text-gray-900">100% Unlocked</h3>
+                <p className="text-pink-500 font-bold mt-1">You found all the items!</p>
+              </div>
+
+              <div className="p-6 md:p-8 flex flex-col gap-4">
+                <p className="text-gray-700 leading-relaxed">
+                  Thank you for taking the time to explore my portfolio! You've successfully found all the interactive items. If you like what you saw and want to connect, feel free to reach out. I'd love to hear from you!
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-3 mt-4">
+                  <a
+                    href="https://www.linkedin.com/in/alexandra-munteanu-5aa485291/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 flex items-center justify-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-md hover:shadow-lg"
+                  >
+                    <Briefcase className="w-5 h-5" />
+                    Start a Chat
+                  </a>
+                </div>
               </div>
             </motion.div>
           </motion.div>
