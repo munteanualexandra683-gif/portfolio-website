@@ -153,6 +153,15 @@ function App() {
             <img src="/pictures/posters.png?v=2" alt="Certificates" className="w-full h-full object-contain" />
           </div>
 
+          {/* Board */}
+          <div
+            className="interactive-object"
+            style={{ left: '54.06%', top: '13.89%', width: '5.78%', height: '21.85%' }}
+            onClick={() => setActiveModal('board')}
+          >
+            <img src="/pictures/board.png" alt="Board" className="w-full h-full object-contain" />
+          </div>
+
           {/* PC */}
           <div
             className="interactive-object"
@@ -243,6 +252,52 @@ function App() {
           </motion.div>
         )}
 
+        {activeModal === 'board' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm"
+            onClick={() => setActiveModal(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="bg-[#fff0f3] w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-pink-200 cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="bg-pink-100/50 px-6 py-4 flex justify-between items-center border-b border-pink-100">
+                <div className="flex items-center gap-3 text-pink-600">
+                  <Briefcase className="w-6 h-6" />
+                  <h3 className="font-display text-xl font-bold tracking-wide uppercase">My Board</h3>
+                </div>
+                <button 
+                  onClick={() => setActiveModal(null)}
+                  className="p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-200 rounded-full transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 md:p-12 text-center">
+                <div className="mx-auto w-16 h-16 bg-pink-100 text-pink-500 rounded-full flex items-center justify-center mb-6 shadow-inner">
+                  <FileText className="w-8 h-8" />
+                </div>
+                <h4 className="text-2xl font-bold text-gray-900 mb-3">
+                  This board is ready!
+                </h4>
+                <p className="text-gray-600 text-lg leading-relaxed max-w-md mx-auto">
+                  What kind of content would you like to put here? We can add your <span className="font-bold text-pink-500">Skills</span>, your <span className="font-bold text-pink-500">Work Experience</span>, or even <span className="font-bold text-pink-500">Certificates</span>. Just let me know what text you want!
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
         {activeModal === 'projects' && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -320,17 +375,17 @@ function App() {
                   {/* Right Column: Visuals */}
                   <div className="lg:w-[45%] flex flex-col gap-4">
                     <div className="aspect-video bg-white/60 rounded-xl border border-pink-100 shadow-sm flex items-center justify-center relative overflow-hidden group">
-                      <img 
-                        src="/pictures/firstpicturehardware.webp" 
-                        alt="Dashboard visualization" 
-                        className="w-full h-full object-cover" 
+                      <img
+                        src="/pictures/firstpicturehardware.webp"
+                        alt="Dashboard visualization"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                     <div className="aspect-video bg-white/60 rounded-xl border border-pink-100 shadow-sm flex items-center justify-center relative overflow-hidden group">
-                      <img 
-                        src="/pictures/secondpichardware.webp" 
-                        alt="Custom PCB design" 
-                        className="w-full h-full object-cover" 
+                      <img
+                        src="/pictures/secondpichardware.webp"
+                        alt="Custom PCB design"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   </div>
@@ -393,10 +448,10 @@ function App() {
                     {/* Right Column: Visuals */}
                     <div className="lg:w-[45%] flex flex-col gap-4">
                       <div className="aspect-video bg-white/60 rounded-xl border border-pink-100 shadow-sm flex items-center justify-center relative overflow-hidden group">
-                        <img 
-                          src="/pictures/websitepic.webp" 
-                          alt="Accessibility Demo UI" 
-                          className="w-full h-full object-cover object-top" 
+                        <img
+                          src="/pictures/websitepic.webp"
+                          alt="Accessibility Demo UI"
+                          className="w-full h-full object-cover object-top"
                         />
                       </div>
                     </div>

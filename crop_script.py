@@ -2,7 +2,7 @@ from PIL import Image
 import os
 import json
 
-images = ['me_welcome.png']
+images = ['board.png']
 results = {}
 
 for img_name in images:
