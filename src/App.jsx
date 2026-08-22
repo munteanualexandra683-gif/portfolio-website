@@ -182,7 +182,7 @@ function App() {
             </button>
             <AnimatePresence>
               {showEmailMenu && (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, y: 10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -190,16 +190,16 @@ function App() {
                   className="absolute right-0 top-full pt-2 z-50"
                 >
                   <div className="w-36 bg-white border border-pink-100 rounded-xl shadow-lg overflow-hidden flex flex-col">
-                    <button 
-                      onClick={() => { setActiveModal('me'); setShowContactForm(true); setShowEmailMenu(false); }} 
+                    <button
+                      onClick={() => { setActiveModal('me'); setShowContactForm(true); setShowEmailMenu(false); }}
                       className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition-colors text-left w-full"
                     >
                       <Mail className="w-4 h-4" />
                       <span>Message</span>
                     </button>
                     <div className="w-full h-px bg-pink-50"></div>
-                    <button 
-                      onClick={(e) => { handleCopyEmail(e); setTimeout(() => setShowEmailMenu(false), 1500); }} 
+                    <button
+                      onClick={(e) => { handleCopyEmail(e); setTimeout(() => setShowEmailMenu(false), 1500); }}
                       className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition-colors text-left w-full"
                     >
                       {copiedEmail ? <CheckCircle className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
@@ -232,7 +232,8 @@ function App() {
             ))}
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
-            I am a computer engineering student bridging the gap between hardware logic and web creativity. I have turned my background, projects, and qualifications into an interactive space. Click around to see for yourself.
+            I am a <span className="text-pink-500 font-medium">computer engineering student</span> bridging the gap between <span className="text-pink-500 font-medium">hardware logic</span> and <span className="text-pink-500 font-medium">web creativity</span>. I have turned my background, projects, and qualifications into an interactive space.
+            <span className="block mt-4 text-pink-500 font-medium">Step inside and take a look around!</span>
           </p>
         </motion.div>
 
