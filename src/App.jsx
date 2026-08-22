@@ -285,131 +285,131 @@ function App() {
             className="relative w-full max-w-7xl aspect-video bg-transparent shrink-0 flex-none"
           >
 
-          {/* Desktop Game Counter */}
-          <AnimatePresence>
-            {foundObjects.length > 0 && (
-              <div className="hidden sm:flex absolute bottom-6 left-6 z-30 w-max pointer-events-none">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  className="pointer-events-auto"
-                >
-                <div className="bg-white/50 backdrop-blur-sm border border-pink-200 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-md flex items-center gap-2 hover:bg-white/80 transition-colors cursor-default">
-                  <span className="text-[10px] sm:text-xs uppercase tracking-widest font-mono text-pink-500 font-bold">
-                    Objects Found:
-                  </span>
-                  <span className="text-xs sm:text-sm font-bold text-gray-900 bg-white px-2 py-0.5 rounded-full shadow-sm border border-pink-200">
-                    {foundObjects.length} / 5
-                  </span>
-                  <button
-                    onClick={handleResetGame}
-                    className="p-1 text-gray-400 hover:text-pink-600 transition-colors rounded-full hover:bg-pink-100/50 cursor-pointer ml-0.5"
-                    title="Reset game progress"
-                    aria-label="Reset progress"
+            {/* Desktop Game Counter */}
+            <AnimatePresence>
+              {foundObjects.length > 0 && (
+                <div className="hidden sm:flex absolute bottom-6 left-6 z-30 w-max pointer-events-none">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    className="pointer-events-auto"
                   >
-                    <RotateCcw className="w-3.5 h-3.5" />
-                  </button>
+                    <div className="bg-white/50 backdrop-blur-sm border border-pink-200 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-md flex items-center gap-2 hover:bg-white/80 transition-colors cursor-default">
+                      <span className="text-[10px] sm:text-xs uppercase tracking-widest font-mono text-pink-500 font-bold">
+                        Objects Found:
+                      </span>
+                      <span className="text-xs sm:text-sm font-bold text-gray-900 bg-white px-2 py-0.5 rounded-full shadow-sm border border-pink-200">
+                        {foundObjects.length} / 5
+                      </span>
+                      <button
+                        onClick={handleResetGame}
+                        className="p-1 text-gray-400 hover:text-pink-600 transition-colors rounded-full hover:bg-pink-100/50 cursor-pointer ml-0.5"
+                        title="Reset game progress"
+                        aria-label="Reset progress"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </motion.div>
                 </div>
-              </motion.div>
-              </div>
-            )}
-          </AnimatePresence>
+              )}
+            </AnimatePresence>
 
-          {/* Loading Screen Overlay */}
-          <AnimatePresence>
-            {!isImageLoaded && (
-              <motion.div
-                initial={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.8, ease: "easeInOut" }}
-                className="absolute inset-0 z-40 bg-[#fff0f3] flex flex-col items-center justify-center overflow-hidden"
-              >
-                <div className="flex flex-col items-center gap-4">
-                  <p className="text-pink-500 font-bold tracking-widest uppercase font-display animate-pulse text-lg sm:text-xl">
-                    Loading Room...
-                  </p>
-                  <div className="w-48 sm:w-64 h-3 bg-pink-200/50 rounded-full overflow-hidden mt-2 shadow-inner border border-pink-200">
-                    <motion.div
-                      className="h-full bg-pink-500 rounded-full"
-                      initial={{ width: "0%" }}
-                      animate={{ width: "100%" }}
-                      transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity }}
-                    />
+            {/* Loading Screen Overlay */}
+            <AnimatePresence>
+              {!isImageLoaded && (
+                <motion.div
+                  initial={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                  className="absolute inset-0 z-40 bg-[#fff0f3] flex flex-col items-center justify-center overflow-hidden"
+                >
+                  <div className="flex flex-col items-center gap-4">
+                    <p className="text-pink-500 font-bold tracking-widest uppercase font-display animate-pulse text-lg sm:text-xl">
+                      Loading Room...
+                    </p>
+                    <div className="w-48 sm:w-64 h-3 bg-pink-200/50 rounded-full overflow-hidden mt-2 shadow-inner border border-pink-200">
+                      <motion.div
+                        className="h-full bg-pink-500 rounded-full"
+                        initial={{ width: "0%" }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity }}
+                      />
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-          {/* Background Room */}
-          <img
-            src="/pictures/room.png"
-            alt="Room"
-            className="absolute inset-0 w-full h-full object-cover"
-            onLoad={() => setIsImageLoaded(true)}
-          />
-
-          {/* Plant (Tree) */}
-          <div
-            className="interactive-object"
-            style={{ left: '23.02%', top: '43.80%', width: '7.60%', height: '25.56%' }}
-            onClick={() => handleObjectClick('plant')}
-          >
-            <img src="/pictures/tree.png?v=2" alt="Plant" className="w-full h-full object-contain" />
-          </div>
-
-          {/* Books (Shelf) */}
-          <div
-            className="interactive-object"
-            style={{ left: '51.20%', top: '30.56%', width: '9.58%', height: '12.13%' }}
-            onClick={() => handleObjectClick('education')}
-          >
-            <img src="/pictures/shelf.png?v=2" alt="Bookshelf" className="w-full h-full object-contain" />
-          </div>
-
-          {/* Certificates (Posters) */}
-          <div
-            className="interactive-object"
-            style={{ left: '28.23%', top: '20.28%', width: '12.03%', height: '24.17%' }}
-            onClick={() => handleObjectClick('posters')}
-          >
-            <img src="/pictures/posters.png?v=2" alt="Certificates" className="w-full h-full object-contain" />
-          </div>
-
-          {/* Board */}
-          <div
-            className="interactive-object"
-            style={{ left: '54.06%', top: '13.89%', width: '5.78%', height: '21.85%' }}
-            onClick={() => handleObjectClick('board')}
-          >
-            <img src="/pictures/board.png" alt="Board" className="w-full h-full object-contain" />
-          </div>
-
-          {/* PC */}
-          <div
-            className="interactive-object"
-            style={{ left: '64.69%', top: '35.28%', width: '6.20%', height: '13.70%' }}
-            onClick={() => handleObjectClick('projects')}
-          >
-            {/* Un-comment and update path when you have the PC image */}
-            <img src="/pictures/pc.png?v=2" alt="PC" className="w-full h-full object-contain" />
-          </div>
-
-          {/* Character */}
-          <div
-            className="interactive-object z-20"
-            style={{ left: '47.66%', top: '41.02%', width: '8.91%', height: '37.59%' }}
-            onClick={() => handleObjectClick('me')}
-          >
+            {/* Background Room */}
             <img
-              src="/pictures/me.png?v=2"
-              alt="Character"
-              className="w-full h-full object-contain"
+              src="/pictures/room.png"
+              alt="Room"
+              className="absolute inset-0 w-full h-full object-cover"
+              onLoad={() => setIsImageLoaded(true)}
             />
-          </div>
 
-        </motion.div>
+            {/* Plant (Tree) */}
+            <div
+              className="interactive-object"
+              style={{ left: '23.02%', top: '43.80%', width: '7.60%', height: '25.56%' }}
+              onClick={() => handleObjectClick('plant')}
+            >
+              <img src="/pictures/tree.png?v=2" alt="Plant" className="w-full h-full object-contain" />
+            </div>
+
+            {/* Books (Shelf) */}
+            <div
+              className="interactive-object"
+              style={{ left: '51.20%', top: '30.56%', width: '9.58%', height: '12.13%' }}
+              onClick={() => handleObjectClick('education')}
+            >
+              <img src="/pictures/shelf.png?v=2" alt="Bookshelf" className="w-full h-full object-contain" />
+            </div>
+
+            {/* Certificates (Posters) */}
+            <div
+              className="interactive-object"
+              style={{ left: '28.23%', top: '20.28%', width: '12.03%', height: '24.17%' }}
+              onClick={() => handleObjectClick('posters')}
+            >
+              <img src="/pictures/posters.png?v=2" alt="Certificates" className="w-full h-full object-contain" />
+            </div>
+
+            {/* Board */}
+            <div
+              className="interactive-object"
+              style={{ left: '54.06%', top: '13.89%', width: '5.78%', height: '21.85%' }}
+              onClick={() => handleObjectClick('board')}
+            >
+              <img src="/pictures/board.png" alt="Board" className="w-full h-full object-contain" />
+            </div>
+
+            {/* PC */}
+            <div
+              className="interactive-object"
+              style={{ left: '64.69%', top: '35.28%', width: '6.20%', height: '13.70%' }}
+              onClick={() => handleObjectClick('projects')}
+            >
+              {/* Un-comment and update path when you have the PC image */}
+              <img src="/pictures/pc.png?v=2" alt="PC" className="w-full h-full object-contain" />
+            </div>
+
+            {/* Character */}
+            <div
+              className="interactive-object z-20"
+              style={{ left: '47.66%', top: '41.02%', width: '8.91%', height: '37.59%' }}
+              onClick={() => handleObjectClick('me')}
+            >
+              <img
+                src="/pictures/me.png?v=2"
+                alt="Character"
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+          </motion.div>
         </div>
 
         {/* Mobile Game Counter */}
@@ -559,11 +559,13 @@ function App() {
 
                 <div className="space-y-3">
                   <div className="flex items-start">
+                    <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
                     <p className="text-gray-700 leading-relaxed">
                       Built web applications using a Django/Python backend and HTML/CSS/JS frontend.
                     </p>
                   </div>
                   <div className="flex items-start">
+                    <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
                     <p className="text-gray-700 leading-relaxed">
                       Performed hands-on hardware assembly and precision soldering.
                     </p>
@@ -625,19 +627,24 @@ function App() {
                   </div>
                   <div className="space-y-2 mt-3">
                     <div className="flex flex-wrap items-center gap-2 pt-1 pb-1">
-                      <span className="font-bold text-gray-900 mr-1 text-sm">Skills:</span>
                       {['JavaScript', 'HTML5', 'CSS'].map(tech => (
                         <span key={tech} className="bg-white border border-pink-100 shadow-sm text-pink-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
                           {tech}
                         </span>
                       ))}
                     </div>
-                    <p className="text-gray-700 text-sm leading-relaxed">
-                      <span className="font-bold text-gray-900 mr-1">Focus:</span> Training focused on Front-End technologies.
-                    </p>
-                    <p className="text-gray-700 text-sm leading-relaxed">
-                      <span className="font-bold text-gray-900 mr-1">Key Achievement:</span> Designed and deployed responsive websites.
-                    </p>
+                    <div className="flex items-start">
+                      <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
+                      <p className="text-gray-700 text-sm leading-relaxed">
+                        Training focused on Front-End technologies.
+                      </p>
+                    </div>
+                    <div className="flex items-start">
+                      <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
+                      <p className="text-gray-700 text-sm leading-relaxed">
+                        Designed and deployed responsive websites.
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -657,9 +664,12 @@ function App() {
                     </div>
                   </div>
                   <div className="mt-3">
-                    <p className="text-gray-700 text-sm leading-relaxed">
-                      <span className="font-bold text-gray-900 mr-1">Context:</span> Professional-level English proficiency for global communication and documentation.
-                    </p>
+                    <div className="flex items-start">
+                      <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
+                      <p className="text-gray-700 text-sm leading-relaxed">
+                        Professional-level English proficiency for global communication and documentation.
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -772,21 +782,21 @@ function App() {
                     </div>
                     <div className="pt-1">
                       <span className="font-bold text-gray-900 text-sm block mb-1">Key Projects Across Europe:</span>
-                      <ul className="space-y-2 mt-1 pl-1">
+                      <ul className="space-y-2 mt-1">
                         <li className="flex items-start">
-                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
                           <p className="text-gray-700 text-sm leading-relaxed">
                             <span className="font-bold text-pink-600">Empowering Vulnerable Youth (Turkey, 2025):</span> Collaborated on international workshops focused on social inclusion, leadership, and youth empowerment.
                           </p>
                         </li>
                         <li className="flex items-start">
-                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
                           <p className="text-gray-700 text-sm leading-relaxed">
                             <span className="font-bold text-pink-600">Reflection 4 Perfection (Lithuania, 2025):</span> Engaged in critical thinking and advanced non-formal learning methodologies.
                           </p>
                         </li>
                         <li className="flex items-start">
-                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
                           <p className="text-gray-700 text-sm leading-relaxed">
                             <span className="font-bold text-pink-600">Violence OUT - Tolerance IN (Serbia, 2024):</span> Promoted cross-cultural dialogue, peace-building, and community tolerance.
                           </p>
@@ -821,15 +831,15 @@ function App() {
                     </div>
                     <div className="pt-1">
                       <span className="font-bold text-gray-900 text-sm block mb-1">Impact:</span>
-                      <ul className="space-y-2 mt-1 pl-1">
+                      <ul className="space-y-2 mt-1">
                         <li className="flex items-start">
-                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
                           <p className="text-gray-700 text-sm leading-relaxed">
                             Facilitated youth development workshops using non-formal education techniques to foster creativity and critical thinking.
                           </p>
                         </li>
                         <li className="flex items-start">
-                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
                           <p className="text-gray-700 text-sm leading-relaxed">
                             Coordinated event logistics and student outreach for local educational initiatives.
                           </p>
@@ -864,21 +874,21 @@ function App() {
                     </div>
                     <div className="pt-1">
                       <span className="font-bold text-gray-900 text-sm block mb-1">Impact:</span>
-                      <ul className="space-y-2 mt-1 pl-1">
+                      <ul className="space-y-2 mt-1">
                         <li className="flex items-start">
-                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
                           <p className="text-gray-700 text-sm leading-relaxed">
                             Provided weekly tutoring in English and Mathematics to children from disadvantaged backgrounds.
                           </p>
                         </li>
                         <li className="flex items-start">
-                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
                           <p className="text-gray-700 text-sm leading-relaxed">
                             Designed personalized learning plans to help students bridge academic gaps and improve long-term school performance.
                           </p>
                         </li>
                         <li className="flex items-start">
-                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
                           <p className="text-gray-700 text-sm leading-relaxed">
                             Acted as a steady mentor, building a positive, encouraging environment for vulnerable youth.
                           </p>
@@ -1334,12 +1344,6 @@ function App() {
                     <Briefcase className="w-5 h-5" />
                     Start a Chat
                   </a>
-                  <button
-                    onClick={handleResetGame}
-                    className="flex-1 flex items-center justify-center gap-2 border border-pink-200 hover:bg-pink-50 text-pink-600 font-bold py-3 px-4 rounded-xl transition-colors shadow-sm"
-                  >
-                    Play Again
-                  </button>
                 </div>
               </div>
             </motion.div>
