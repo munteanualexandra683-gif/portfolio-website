@@ -1328,7 +1328,7 @@ function App() {
 
               <div className="p-6 md:p-8 flex flex-col gap-4">
                 <p className="text-gray-700 leading-relaxed">
-                  Thank you for taking the time to explore my portfolio! You've successfully found all the interactive items. If you like what you saw and want to connect, feel free to reach out. I'd love to hear from you!
+                  Thank you for taking the time to explore my portfolio! You've successfully found all the objects. If you like what you saw and want to connect, feel free to reach out. I'd love to hear from you!
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-3 mt-4">
