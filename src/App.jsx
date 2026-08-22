@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart, Download } from 'lucide-react';
+import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart, Download, Send, ArrowLeft, CheckCircle, Copy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 function App() {
@@ -24,6 +24,54 @@ function App() {
     }
   });
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const [showContactForm, setShowContactForm] = useState(false);
+  const [showEmailMenu, setShowEmailMenu] = useState(false);
+  const [formStatus, setFormStatus] = useState("idle");
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    setFormStatus("submitting");
+
+    // Replace this with your actual Web3Forms Access Key
+    const ACCESS_KEY = "f3646684-d9ce-4280-b979-45010fb760b4";
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: ACCESS_KEY,
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setFormStatus("success");
+      } else {
+        console.error("Web3Forms Error:", result);
+        setFormStatus("error");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setFormStatus("error");
+    }
+  };
+
+  const handleCopyEmail = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText("munteanualexandra683@gmail.com");
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
 
   const handleObjectClick = (objectId) => {
     setActiveModal(objectId);
@@ -123,10 +171,45 @@ function App() {
             <Briefcase className="w-5 h-5" />
             <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">LinkedIn</span>
           </a>
-          <a href="mailto:munteanualexandra683@gmail.com" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="Email">
-            <Mail className="w-5 h-5" />
-            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Email</span>
-          </a>
+          <div className="relative" onMouseLeave={() => setShowEmailMenu(false)}>
+            <button onMouseEnter={() => setShowEmailMenu(true)} onClick={() => setShowEmailMenu(!showEmailMenu)} className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative cursor-pointer" aria-label="Email">
+              <Mail className="w-5 h-5" />
+              {!showEmailMenu && (
+                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                  Email
+                </span>
+              )}
+            </button>
+            <AnimatePresence>
+              {showEmailMenu && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 top-full pt-2 z-50"
+                >
+                  <div className="w-36 bg-white border border-pink-100 rounded-xl shadow-lg overflow-hidden flex flex-col">
+                    <button 
+                      onClick={() => { setActiveModal('me'); setShowContactForm(true); setShowEmailMenu(false); }} 
+                      className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition-colors text-left w-full"
+                    >
+                      <Mail className="w-4 h-4" />
+                      <span>Message</span>
+                    </button>
+                    <div className="w-full h-px bg-pink-50"></div>
+                    <button 
+                      onClick={(e) => { handleCopyEmail(e); setTimeout(() => setShowEmailMenu(false), 1500); }} 
+                      className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition-colors text-left w-full"
+                    >
+                      {copiedEmail ? <CheckCircle className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                      <span>{copiedEmail ? "Copied!" : "Copy"}</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </motion.header>
 
@@ -149,7 +232,7 @@ function App() {
             ))}
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
-            I'm a computer engineering student bridging the gap between hardware logic and web creativity. I've turned my background, projects, and qualifications into an interactive space. Click around to see for yourself.
+            I am a computer engineering student bridging the gap between hardware logic and web creativity. I have turned my background, projects, and qualifications into an interactive space. Click around to see for yourself.
           </p>
         </motion.div>
 
@@ -932,7 +1015,14 @@ function App() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm"
-            onClick={() => setActiveModal(null)}
+            onClick={() => {
+              setActiveModal(null);
+              setTimeout(() => {
+                setShowContactForm(false);
+                setFormStatus("idle");
+                setFormData({ name: "", email: "", message: "" });
+              }, 300);
+            }}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -944,73 +1034,189 @@ function App() {
             >
               <div className="bg-pink-100/50 px-6 py-4 flex justify-between items-center border-b border-pink-100">
                 <div className="flex items-center gap-3 text-pink-600">
-                  <span className="font-display text-xl font-bold tracking-wide uppercase">Contact</span>
+                  {showContactForm && (
+                    <button
+                      onClick={() => {
+                        setShowContactForm(false);
+                        setFormStatus("idle");
+                        setFormData({ name: "", email: "", message: "" });
+                      }}
+                      className="p-1 -ml-2 text-pink-500 hover:bg-pink-200 rounded-full transition-colors"
+                    >
+                      <ArrowLeft className="w-5 h-5" />
+                    </button>
+                  )}
+                  <span className="font-display text-xl font-bold tracking-wide uppercase">
+                    {showContactForm ? "Send Message" : "Contact"}
+                  </span>
                 </div>
                 <button
-                  onClick={() => setActiveModal(null)}
+                  onClick={() => {
+                    setActiveModal(null);
+                    setTimeout(() => {
+                      setShowContactForm(false);
+                      setFormStatus("idle");
+                      setFormData({ name: "", email: "", message: "" });
+                    }, 300);
+                  }}
                   className="p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-200 rounded-full transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="p-6 md:p-8 flex flex-col gap-4">
-                <a
-                  href="https://github.com/munteanualexandra683-gif"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
-                >
-                  <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
-                    <Code className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900">GitHub</h4>
-                    <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors">munteanualexandra683-gif</span>
-                  </div>
-                </a>
+              <div className="p-6 md:p-8 relative overflow-hidden">
+                <AnimatePresence mode="wait">
+                  {!showContactForm ? (
+                    <motion.div
+                      key="links"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex flex-col gap-4"
+                    >
+                      <a href="https://github.com/munteanualexandra683-gif" target="_blank" rel="noreferrer" className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
+                        <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                          <Code className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-gray-900">GitHub</h4>
+                          <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors">munteanualexandra683-gif</span>
+                        </div>
+                      </a>
 
-                <a
-                  href="https://www.linkedin.com/in/alexandra-munteanu-5aa485291/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
-                >
-                  <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
-                    <Briefcase className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900">LinkedIn</h4>
-                    <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">Alexandra Munteanu</span>
-                  </div>
-                </a>
+                      <a href="https://www.linkedin.com/in/alexandra-munteanu-5aa485291/" target="_blank" rel="noreferrer" className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
+                        <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                          <Briefcase className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-gray-900">LinkedIn</h4>
+                          <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">Alexandra Munteanu</span>
+                        </div>
+                      </a>
 
-                <a
-                  href="mailto:munteanualexandra683@gmail.com"
-                  className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
-                >
-                  <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
-                    <Mail className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900">Email</h4>
-                    <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">munteanualexandra683@gmail.com</span>
-                  </div>
-                </a>
+                      <div className="flex flex-row items-center w-full p-2 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md transition-all group">
+                        <button onClick={() => setShowContactForm(true)} className="flex items-center text-left flex-1 gap-4 p-2 cursor-pointer rounded-lg hover:bg-pink-50/50 transition-colors">
+                          <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                            <Mail className="w-6 h-6" />
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-gray-900">Email Me</h4>
+                            <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">Send a message directly</span>
+                          </div>
+                        </button>
+                        <div className="w-px h-10 bg-pink-100 mx-1"></div>
+                        <button onClick={handleCopyEmail} className="p-3 mr-1 text-gray-400 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-colors group/copy relative" aria-label="Copy email address">
+                          {copiedEmail ? <CheckCircle className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
+                          <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover/copy:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                            {copiedEmail ? "Copied!" : "Copy"}
+                          </span>
+                        </button>
+                      </div>
 
-                <a
-                  href="/alexandra_munteanu_resume.pdf"
-                  download="Alexandra_Munteanu_Resume.pdf"
-                  className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
-                >
-                  <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
-                    <FileText className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900">Resume</h4>
-                    <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">Download PDF</span>
-                  </div>
-                </a>
+                      <a href="/alexandra_munteanu_resume.pdf" download="Alexandra_Munteanu_Resume.pdf" className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
+                        <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                          <FileText className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-gray-900">Resume</h4>
+                          <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">Download PDF</span>
+                        </div>
+                      </a>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="form"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex flex-col h-[340px]"
+                    >
+                      {formStatus === "success" ? (
+                        <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ type: "spring", bounce: 0.5 }}
+                          >
+                            <CheckCircle className="w-16 h-16 text-pink-500" />
+                          </motion.div>
+                          <h3 className="text-xl font-bold text-gray-900">Message Sent!</h3>
+                          <p className="text-sm text-gray-500">Thanks for reaching out, I'll get back to you soon.</p>
+                        </div>
+                      ) : formStatus === "error" ? (
+                        <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ type: "spring", bounce: 0.5 }}
+                          >
+                            <X className="w-16 h-16 text-red-500" />
+                          </motion.div>
+                          <h3 className="text-xl font-bold text-gray-900">Oops!</h3>
+                          <p className="text-sm text-gray-500">Something went wrong sending the message. Please check the developer console for details.</p>
+                          <button
+                            onClick={() => setFormStatus("idle")}
+                            className="mt-2 px-6 py-2 bg-pink-100 text-pink-600 font-bold rounded-full hover:bg-pink-200 transition-colors"
+                          >
+                            Try Again
+                          </button>
+                        </div>
+                      ) : (
+                        <form onSubmit={handleContactSubmit} className="flex flex-col gap-3 h-full">
+                          <div>
+                            <input
+                              type="text"
+                              required
+                              placeholder="Your Name"
+                              value={formData.name}
+                              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                              className="w-full px-4 py-2.5 rounded-xl border border-pink-100 bg-white focus:outline-none focus:ring-2 focus:ring-pink-300 transition-shadow text-sm text-gray-800 placeholder:text-gray-400"
+                              disabled={formStatus === "submitting"}
+                            />
+                          </div>
+                          <div>
+                            <input
+                              type="email"
+                              required
+                              placeholder="Your Email Address"
+                              value={formData.email}
+                              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                              className="w-full px-4 py-2.5 rounded-xl border border-pink-100 bg-white focus:outline-none focus:ring-2 focus:ring-pink-300 transition-shadow text-sm text-gray-800 placeholder:text-gray-400"
+                              disabled={formStatus === "submitting"}
+                            />
+                          </div>
+                          <div className="flex-1 min-h-0">
+                            <textarea
+                              required
+                              placeholder="Your Message"
+                              value={formData.message}
+                              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                              className="w-full h-full min-h-[100px] px-4 py-2.5 rounded-xl border border-pink-100 bg-white focus:outline-none focus:ring-2 focus:ring-pink-300 transition-shadow resize-none text-sm text-gray-800 placeholder:text-gray-400"
+                              disabled={formStatus === "submitting"}
+                            />
+                          </div>
+                          <button
+                            type="submit"
+                            disabled={formStatus === "submitting"}
+                            className="w-full py-3 px-4 mt-1 bg-pink-500 hover:bg-pink-600 disabled:bg-pink-300 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm"
+                          >
+                            {formStatus === "submitting" ? (
+                              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                            ) : (
+                              <>
+                                <Send className="w-4 h-4" />
+                                Send Message
+                              </>
+                            )}
+                          </button>
+                        </form>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
           </motion.div>
@@ -1056,7 +1262,7 @@ function App() {
                     href="https://www.linkedin.com/in/alexandra-munteanu-5aa485291/"
                     target="_blank"
                     rel="noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-md hover:shadow-lg"
+                    className="w-full flex items-center justify-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-xl transition-colors shadow-md hover:shadow-lg"
                   >
                     <Briefcase className="w-5 h-5" />
                     Start a Chat
