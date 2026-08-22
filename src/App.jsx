@@ -16,11 +16,14 @@ function App() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="max-w-3xl"
         >
+          <span className="text-xs md:text-sm uppercase tracking-widest font-mono text-pink-500 font-bold mb-3 block">
+            [ Player 1: Alexandra Munteanu ]
+          </span>
           <h1 className="font-display text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-6 drop-shadow-sm">
-            Welcome to my portfolio.
+            Ready to explore?
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
-            I am a computer engineering student passionate about building creative, interactive, and user-centered web experiences.
+            I'm a computer engineering student bridging the gap between hardware logic and web creativity. I've turned my background, projects, and qualifications into an interactive space. Click around to see for yourself.
           </p>
         </motion.div>
 
@@ -32,7 +35,7 @@ function App() {
           transition={{ delay: 1, duration: 1 }}
         >
           <span className="text-sm uppercase tracking-widest font-semibold mb-2 text-pink-500">
-            Scroll down to step inside
+            Scroll down to enter the room
           </span>
           <motion.div
             animate={{ y: [0, 10, 0] }}
@@ -51,7 +54,7 @@ function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="w-full max-w-5xl text-center mb-8"
+          className="w-full max-w-7xl text-center mb-8"
         >
           <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-800">
             Find the 4 objects to discover my story.
@@ -64,7 +67,7 @@ function App() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="relative w-full max-w-5xl aspect-video bg-transparent"
+          className="relative w-full max-w-7xl aspect-video bg-transparent"
         >
 
           {/* Background Room */}
