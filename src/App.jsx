@@ -272,7 +272,7 @@ function App() {
               <div className="bg-pink-100/50 px-6 py-4 flex justify-between items-center border-b border-pink-100">
                 <div className="flex items-center gap-3 text-pink-600">
                   <Briefcase className="w-6 h-6" />
-                  <h3 className="font-display text-xl font-bold tracking-wide uppercase">My Board</h3>
+                  <h3 className="font-display text-xl font-bold tracking-wide uppercase">Professional Experience</h3>
                 </div>
                 <button 
                   onClick={() => setActiveModal(null)}
@@ -283,16 +283,35 @@ function App() {
               </div>
 
               {/* Modal Body */}
-              <div className="p-6 md:p-12 text-center">
-                <div className="mx-auto w-16 h-16 bg-pink-100 text-pink-500 rounded-full flex items-center justify-center mb-6 shadow-inner">
-                  <FileText className="w-8 h-8" />
+              <div className="p-6 md:p-8 text-left">
+                
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start border-b border-pink-100 pb-4 mb-4">
+                  <div>
+                    <h4 className="text-2xl font-bold text-gray-900 mb-1">
+                      Computer Engineering Intern
+                    </h4>
+                    <span className="text-pink-500 font-bold text-lg">UMB Grup</span>
+                  </div>
+                  <div className="mt-2 sm:mt-0 flex flex-col items-start sm:items-end gap-1">
+                    <span className="text-gray-600 bg-white/50 px-3 py-1 rounded-full text-sm border border-pink-100 shadow-sm font-mono tracking-tight">
+                      Jul 2026 – Oct 2026
+                    </span>
+                  </div>
                 </div>
-                <h4 className="text-2xl font-bold text-gray-900 mb-3">
-                  This board is ready!
-                </h4>
-                <p className="text-gray-600 text-lg leading-relaxed max-w-md mx-auto">
-                  What kind of content would you like to put here? We can add your <span className="font-bold text-pink-500">Skills</span>, your <span className="font-bold text-pink-500">Work Experience</span>, or even <span className="font-bold text-pink-500">Certificates</span>. Just let me know what text you want!
-                </p>
+
+                <div className="space-y-3">
+                  <div className="flex items-start">
+                    <p className="text-gray-700 leading-relaxed">
+                      Built web applications using a Django/Python backend and HTML/CSS/JS frontend.
+                    </p>
+                  </div>
+                  <div className="flex items-start">
+                    <p className="text-gray-700 leading-relaxed">
+                      Performed hands-on hardware assembly and precision soldering.
+                    </p>
+                  </div>
+                </div>
+
               </div>
             </motion.div>
           </motion.div>
