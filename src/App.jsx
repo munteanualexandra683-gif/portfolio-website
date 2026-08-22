@@ -7,15 +7,48 @@ function App() {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
-  const [foundObjects, setFoundObjects] = useState([]);
-  const [hasWon, setHasWon] = useState(false);
+  const [foundObjects, setFoundObjects] = useState(() => {
+    try {
+      const saved = localStorage.getItem('foundObjects');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+  const [hasWon, setHasWon] = useState(() => {
+    try {
+      const saved = localStorage.getItem('hasWon');
+      return saved ? JSON.parse(saved) : false;
+    } catch (e) {
+      return false;
+    }
+  });
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const handleObjectClick = (objectId) => {
     setActiveModal(objectId);
     if (objectId !== 'me' && !foundObjects.includes(objectId)) {
-      setFoundObjects(prev => [...prev, objectId]);
+      setFoundObjects(prev => {
+        const next = [...prev, objectId];
+        localStorage.setItem('foundObjects', JSON.stringify(next));
+        return next;
+      });
     }
   };
+
+  const handleResetGame = () => {
+    setFoundObjects([]);
+    setHasWon(false);
+    setActiveModal(null);
+    localStorage.removeItem('foundObjects');
+    localStorage.removeItem('hasWon');
+  };
+
+  useEffect(() => {
+    if (hasWon) {
+      localStorage.setItem('hasWon', 'true');
+    }
+  }, [hasWon]);
 
   useEffect(() => {
     if (foundObjects.length === 5 && !activeModal && !hasWon) {
@@ -184,11 +217,38 @@ function App() {
             )}
           </AnimatePresence>
 
+          {/* Loading Screen Overlay */}
+          <AnimatePresence>
+            {!isImageLoaded && (
+              <motion.div
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                className="absolute inset-0 z-40 bg-[#fff0f3] flex flex-col items-center justify-center overflow-hidden"
+              >
+                <div className="flex flex-col items-center gap-4">
+                  <p className="text-pink-500 font-bold tracking-widest uppercase font-display animate-pulse text-lg sm:text-xl">
+                    Loading Room...
+                  </p>
+                  <div className="w-48 sm:w-64 h-3 bg-pink-200/50 rounded-full overflow-hidden mt-2 shadow-inner border border-pink-200">
+                    <motion.div
+                      className="h-full bg-pink-500 rounded-full"
+                      initial={{ width: "0%" }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 1.5, ease: "easeInOut", repeat: Infinity }}
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Background Room */}
           <img
             src="/pictures/room.png"
             alt="Room"
             className="absolute inset-0 w-full h-full object-cover"
+            onLoad={() => setIsImageLoaded(true)}
           />
 
           {/* Plant (Tree) */}
@@ -1001,6 +1061,12 @@ function App() {
                     <Briefcase className="w-5 h-5" />
                     Start a Chat
                   </a>
+                  <button
+                    onClick={handleResetGame}
+                    className="flex-1 flex items-center justify-center gap-2 border border-pink-200 hover:bg-pink-50 text-pink-600 font-bold py-3 px-4 rounded-xl transition-colors shadow-sm"
+                  >
+                    Play Again
+                  </button>
                 </div>
               </div>
             </motion.div>
