@@ -282,7 +282,7 @@ function App() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="relative w-full max-w-7xl aspect-video bg-transparent shrink-0 flex-none"
+            className="relative w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl aspect-video bg-transparent shrink-0 flex-none"
           >
 
             {/* Desktop Game Counter */}
