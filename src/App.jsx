@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
-import { ChevronDown, Code, Briefcase, Mail, FileText } from 'lucide-react';
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
+import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap } from 'lucide-react';
 
 function App() {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
+  const [activeModal, setActiveModal] = useState(null);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
@@ -107,7 +108,7 @@ function App() {
           className="w-full max-w-7xl text-center mb-8"
         >
           <h2 className="font-display text-3xl md:text-4xl font-bold text-gray-800">
-            Find the 4 objects to discover my story.
+            Find the <span className="text-pink-500">4 objects</span> to discover <span className="text-pink-500">my story</span>.
           </h2>
         </motion.div>
 
@@ -139,6 +140,7 @@ function App() {
           <div
             className="interactive-object"
             style={{ left: '51.20%', top: '30.56%', width: '9.58%', height: '12.13%' }}
+            onClick={() => setActiveModal('education')}
           >
             <img src="/pictures/shelf.png?v=2" alt="Bookshelf" className="w-full h-full object-contain" />
           </div>
@@ -174,6 +176,72 @@ function App() {
 
         </motion.div>
       </section>
+
+      {/* MODALS */}
+      <AnimatePresence>
+        {activeModal === 'education' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm"
+            onClick={() => setActiveModal(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="bg-[#fff0f3] w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-pink-200 cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="bg-pink-100/50 px-6 py-4 flex justify-between items-center border-b border-pink-100">
+                <div className="flex items-center gap-3 text-pink-600">
+                  <GraduationCap className="w-6 h-6" />
+                  <h3 className="font-display text-xl font-bold tracking-wide uppercase">My Education</h3>
+                </div>
+                <button 
+                  onClick={() => setActiveModal(null)}
+                  className="p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-200 rounded-full transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 md:p-8 text-left">
+                <h4 className="text-2xl font-bold text-gray-900 mb-1">
+                  University POLITEHNICA of Bucharest
+                </h4>
+                <div className="text-pink-500 font-semibold mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-start sm:items-center gap-2">
+                  <span>B.Sc. in Computers and Information Technology</span>
+                  <span className="text-gray-600 bg-white/50 px-3 py-1 rounded-full text-sm border border-pink-100 shadow-sm w-fit font-mono tracking-tight">
+                    Oct 2025 – Jun 2029
+                  </span>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex flex-col sm:flex-row gap-1 sm:gap-4 items-start sm:items-center">
+                    <span className="font-bold text-gray-800 w-36 shrink-0 text-sm uppercase tracking-wider">Grade</span>
+                    <span className="text-gray-700 font-medium bg-white/60 px-2 py-0.5 rounded shadow-sm border border-pink-50">9.17 / 10.00</span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-1 sm:gap-4 items-start sm:items-center">
+                    <span className="font-bold text-gray-800 w-36 shrink-0 text-sm uppercase tracking-wider">Specialization</span>
+                    <span className="text-gray-700 font-medium">French-Taught Engineering Stream</span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-1 sm:gap-4 pt-2 items-start">
+                    <span className="font-bold text-gray-800 w-36 shrink-0 text-sm uppercase tracking-wider mt-1">Coursework</span>
+                    <span className="text-gray-600 leading-relaxed text-sm">
+                      Data Structures & Algorithms (C/C++), Object-Oriented Programming (Java), Operating Systems (Linux), Web Development.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   )
