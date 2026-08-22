@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink } from 'lucide-react';
+import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart } from 'lucide-react';
 
 function App() {
   const { scrollY } = useScroll();
@@ -40,15 +40,15 @@ function App() {
             <FileText className="w-5 h-5" />
             <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Resume</span>
           </a>
-          <a href="https://github.com" target="_blank" rel="noreferrer" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="GitHub">
+          <a href="https://github.com/munteanualexandra683-gif" target="_blank" rel="noreferrer" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="GitHub">
             <Code className="w-5 h-5" />
             <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">GitHub</span>
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/in/alexandra-munteanu-5aa485291/" target="_blank" rel="noreferrer" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="LinkedIn">
             <Briefcase className="w-5 h-5" />
             <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">LinkedIn</span>
           </a>
-          <a href="mailto:your.email@example.com" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="Email">
+          <a href="mailto:munteanualexandra683@gmail.com" className="p-2 text-gray-600 hover:text-pink-500 transition-colors group relative" aria-label="Email">
             <Mail className="w-5 h-5" />
             <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Email</span>
           </a>
@@ -132,6 +132,7 @@ function App() {
           <div
             className="interactive-object"
             style={{ left: '23.02%', top: '43.80%', width: '7.60%', height: '25.56%' }}
+            onClick={() => setActiveModal('plant')}
           >
             <img src="/pictures/tree.png?v=2" alt="Plant" className="w-full h-full object-contain" />
           </div>
@@ -149,6 +150,7 @@ function App() {
           <div
             className="interactive-object"
             style={{ left: '28.23%', top: '20.28%', width: '12.03%', height: '24.17%' }}
+            onClick={() => setActiveModal('posters')}
           >
             <img src="/pictures/posters.png?v=2" alt="Certificates" className="w-full h-full object-contain" />
           </div>
@@ -176,6 +178,7 @@ function App() {
           <div
             className="interactive-object z-20"
             style={{ left: '47.66%', top: '41.02%', width: '8.91%', height: '37.59%' }}
+            onClick={() => setActiveModal('me')}
           >
             <img
               src="/pictures/me.png?v=2"
@@ -309,6 +312,303 @@ function App() {
                     <p className="text-gray-700 leading-relaxed">
                       Performed hands-on hardware assembly and precision soldering.
                     </p>
+                  </div>
+                </div>
+
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {activeModal === 'posters' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm"
+            onClick={() => setActiveModal(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="bg-[#fff0f3] w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-pink-200 cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="bg-pink-100/50 px-6 py-4 flex justify-between items-center border-b border-pink-100">
+                <div className="flex items-center gap-3 text-pink-600">
+                  <FileText className="w-6 h-6" />
+                  <h3 className="font-display text-xl font-bold tracking-wide uppercase">Certifications & Learning</h3>
+                </div>
+                <button 
+                  onClick={() => setActiveModal(null)}
+                  className="p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-200 rounded-full transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 md:p-8 text-left max-h-[75vh] overflow-y-auto custom-scrollbar">
+                
+                {/* Cert 1 */}
+                <div className="border-b border-pink-100 pb-5 mb-5">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
+                    <div>
+                      <h4 className="text-xl font-bold text-gray-900">
+                        Web Programming 101 Certificate
+                      </h4>
+                      <span className="text-pink-500 font-bold">Issuer: Cisco</span>
+                    </div>
+                    <div className="mt-1 sm:mt-0">
+                      <span className="text-gray-600 bg-white/50 px-3 py-1 rounded-full text-xs border border-pink-100 shadow-sm font-mono tracking-tight">
+                        Issued: Dec 2025
+                      </span>
+                    </div>
+                  </div>
+                  <div className="space-y-2 mt-3">
+                    <div className="flex flex-wrap items-center gap-2 pt-1 pb-1">
+                      <span className="font-bold text-gray-900 mr-1 text-sm">Skills:</span>
+                      {['JavaScript', 'HTML5', 'CSS'].map(tech => (
+                        <span key={tech} className="bg-white border border-pink-100 shadow-sm text-pink-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      <span className="font-bold text-gray-900 mr-1">Focus:</span> Training focused on Front-End technologies.
+                    </p>
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      <span className="font-bold text-gray-900 mr-1">Key Achievement:</span> Designed and deployed responsive websites.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Cert 2 */}
+                <div className="border-b border-pink-100 pb-5 mb-5">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
+                    <div>
+                      <h4 className="text-xl font-bold text-gray-900">
+                        Cambridge English Level C2
+                      </h4>
+                      <span className="text-pink-500 font-bold">Issuer: Cambridge University Press & Assessment</span>
+                    </div>
+                    <div className="mt-1 sm:mt-0">
+                      <span className="text-gray-600 bg-white/50 px-3 py-1 rounded-full text-xs border border-pink-100 shadow-sm font-mono tracking-tight">
+                        Issued: Jun 2023
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      <span className="font-bold text-gray-900 mr-1">Context:</span> Professional-level English proficiency for global communication and documentation.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Upskilling */}
+                <div className="bg-pink-50/50 p-4 rounded-xl border border-pink-100">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="bg-pink-500 text-white text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full">In Progress / Upskilling</span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
+                    <div>
+                      <h4 className="text-lg font-bold text-gray-900">
+                        Python Certification
+                      </h4>
+                      <span className="text-pink-500 font-bold text-sm">Issuer: freeCodeCamp</span>
+                    </div>
+                    <div className="mt-1 sm:mt-0">
+                      <span className="text-pink-600 bg-pink-100 px-3 py-1 rounded-full text-xs font-mono tracking-tight font-bold">
+                        Status: Currently Working On
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <p className="text-gray-700 text-sm leading-relaxed">
+                      <span className="font-bold text-gray-900 mr-1">Goal:</span> Expanding backend, data structures, and automation skills to complement my Python/Django experience.
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {activeModal === 'plant' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm"
+            onClick={() => setActiveModal(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="bg-[#fff0f3] w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-pink-200 cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="bg-pink-100/50 px-6 py-4 flex justify-between items-center border-b border-pink-100">
+                <div className="flex items-center gap-3 text-pink-600">
+                  <Heart className="w-6 h-6" />
+                  <h3 className="font-display text-xl font-bold tracking-wide uppercase">Community & Leadership</h3>
+                </div>
+                <button 
+                  onClick={() => setActiveModal(null)}
+                  className="p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-200 rounded-full transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 md:p-8 text-left max-h-[75vh] overflow-y-auto custom-scrollbar">
+                
+                {/* Role 1 */}
+                <div className="border-b border-pink-100 pb-5 mb-5">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
+                    <div>
+                      <h4 className="text-xl font-bold text-gray-900">
+                        Erasmus+ Participant
+                      </h4>
+                      <span className="text-pink-500 font-bold">Organization: European Commission</span>
+                    </div>
+                    <div className="mt-1 sm:mt-0">
+                      <span className="text-gray-600 bg-white/50 px-3 py-1 rounded-full text-xs border border-pink-100 shadow-sm font-mono tracking-tight">
+                        2024 – 2025
+                      </span>
+                    </div>
+                  </div>
+                  <div className="space-y-2 mt-3">
+                    <div className="flex flex-wrap items-center gap-2 pt-1 pb-1">
+                      {['Cross-Cultural Communication', 'Public Speaking'].map(skill => (
+                        <span key={skill} className="bg-white border border-pink-100 shadow-sm text-pink-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="pt-1">
+                      <span className="font-bold text-gray-900 text-sm block mb-1">Key Projects Across Europe:</span>
+                      <ul className="space-y-2 mt-1 pl-1">
+                        <li className="flex items-start">
+                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <p className="text-gray-700 text-sm leading-relaxed">
+                            <span className="font-bold text-pink-600">Empowering Vulnerable Youth (Turkey, 2025):</span> Collaborated on international workshops focused on social inclusion, leadership, and youth empowerment.
+                          </p>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <p className="text-gray-700 text-sm leading-relaxed">
+                            <span className="font-bold text-pink-600">Reflection 4 Perfection (Lithuania, 2025):</span> Engaged in critical thinking and advanced non-formal learning methodologies.
+                          </p>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <p className="text-gray-700 text-sm leading-relaxed">
+                            <span className="font-bold text-pink-600">Violence OUT - Tolerance IN (Serbia, 2024):</span> Promoted cross-cultural dialogue, peace-building, and community tolerance.
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Role 2 */}
+                <div className="border-b border-pink-100 pb-5 mb-5">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
+                    <div>
+                      <h4 className="text-xl font-bold text-gray-900">
+                        Youth Ambassador & Volunteer
+                      </h4>
+                      <span className="text-pink-500 font-bold">Organization: ThinkUp Academy</span>
+                    </div>
+                    <div className="mt-1 sm:mt-0">
+                      <span className="text-gray-600 bg-white/50 px-3 py-1 rounded-full text-xs border border-pink-100 shadow-sm font-mono tracking-tight">
+                        2022 – 2023
+                      </span>
+                    </div>
+                  </div>
+                  <div className="space-y-2 mt-3">
+                    <div className="flex flex-wrap items-center gap-2 pt-1 pb-1">
+                      {['Workshop Facilitation', 'Event Logistics', 'Creative Problem Solving', 'Community Outreach'].map(skill => (
+                        <span key={skill} className="bg-white border border-pink-100 shadow-sm text-pink-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="pt-1">
+                      <span className="font-bold text-gray-900 text-sm block mb-1">Impact:</span>
+                      <ul className="space-y-2 mt-1 pl-1">
+                        <li className="flex items-start">
+                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <p className="text-gray-700 text-sm leading-relaxed">
+                            Facilitated youth development workshops using non-formal education techniques to foster creativity and critical thinking.
+                          </p>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <p className="text-gray-700 text-sm leading-relaxed">
+                            Coordinated event logistics and student outreach for local educational initiatives.
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Role 3 */}
+                <div>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
+                    <div>
+                      <h4 className="text-xl font-bold text-gray-900">
+                        Volunteer & Mentor
+                      </h4>
+                      <span className="text-pink-500 font-bold">Organization: Ajungem MARI</span>
+                    </div>
+                    <div className="mt-1 sm:mt-0">
+                      <span className="text-gray-600 bg-white/50 px-3 py-1 rounded-full text-xs border border-pink-100 shadow-sm font-mono tracking-tight">
+                        2022 – 2023
+                      </span>
+                    </div>
+                  </div>
+                  <div className="space-y-2 mt-3">
+                    <div className="flex flex-wrap items-center gap-2 pt-1 pb-1">
+                      {['Active Listening', 'Personalized Mentorship', 'Academic Tutoring', 'Time Management'].map(skill => (
+                        <span key={skill} className="bg-white border border-pink-100 shadow-sm text-pink-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="pt-1">
+                      <span className="font-bold text-gray-900 text-sm block mb-1">Impact:</span>
+                      <ul className="space-y-2 mt-1 pl-1">
+                        <li className="flex items-start">
+                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <p className="text-gray-700 text-sm leading-relaxed">
+                            Provided weekly tutoring in English and Mathematics to children from disadvantaged backgrounds.
+                          </p>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <p className="text-gray-700 text-sm leading-relaxed">
+                            Designed personalized learning plans to help students bridge academic gaps and improve long-term school performance.
+                          </p>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-pink-500 mt-0.5 mr-2">▹</span>
+                          <p className="text-gray-700 text-sm leading-relaxed">
+                            Acted as a steady mentor, building a positive, encouraging environment for vulnerable youth.
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
 
@@ -477,6 +777,82 @@ function App() {
                   </div>
                 </div>
 
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {activeModal === 'me' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm"
+            onClick={() => setActiveModal(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="bg-[#fff0f3] w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden border border-pink-200 cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="bg-pink-100/50 px-6 py-4 flex justify-between items-center border-b border-pink-100">
+                <div className="flex items-center gap-3 text-pink-600">
+                  <span className="font-display text-xl font-bold tracking-wide uppercase">Contact & Socials</span>
+                </div>
+                <button 
+                  onClick={() => setActiveModal(null)}
+                  className="p-1.5 text-gray-400 hover:text-pink-600 hover:bg-pink-200 rounded-full transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-6 md:p-8 flex flex-col gap-4">
+                <a 
+                  href="https://github.com/munteanualexandra683-gif" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
+                >
+                  <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                    <Code className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900">GitHub</h4>
+                    <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors">munteanualexandra683-gif</span>
+                  </div>
+                </a>
+
+                <a 
+                  href="https://www.linkedin.com/in/alexandra-munteanu-5aa485291/" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
+                >
+                  <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                    <Briefcase className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900">LinkedIn</h4>
+                    <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">Alexandra Munteanu</span>
+                  </div>
+                </a>
+
+                <a 
+                  href="mailto:munteanualexandra683@gmail.com" 
+                  className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
+                >
+                  <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                    <Mail className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-gray-900">Email</h4>
+                    <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">munteanualexandra683@gmail.com</span>
+                  </div>
+                </a>
               </div>
             </motion.div>
           </motion.div>
