@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart, Download, Send, ArrowLeft, CheckCircle, Copy, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import Spline from '@splinetool/react-spline';
+
+const Spline = lazy(() => import('@splinetool/react-spline'));
 
 const playSound = (soundPath) => {
   const audio = new Audio(soundPath);
@@ -239,24 +240,35 @@ function App() {
         </div>
       </motion.header>
 
-      {/* SECTION 0: SPLINE HERO */}
-      <section className="relative h-[60vh] md:h-screen w-full overflow-hidden bg-[#fff0f3] flex items-center justify-center">
-        {/* On mobile, we force a massive square aspect ratio (300vw) so Spline renders it wide.
-            Then we scale it down to 30% so it only takes up 90% of your screen width.
-            This guarantees it fits perfectly with nice breathing room on the sides! */}
-        <div className="relative w-[300vw] h-[300vw] max-w-none scale-[0.3] sm:w-[200vw] sm:h-[200vw] sm:scale-[0.45] md:w-full md:h-full md:scale-100 z-0 pointer-events-auto bg-transparent origin-center flex-shrink-0">
-          <Spline 
-            scene="https://prod.spline.design/636LGSUiulrIAocV/scene.splinecode?v=8" 
-            style={{ backgroundColor: 'transparent', width: '100%', height: '100%' }} 
+      {/* SECTION 0: HERO IMAGE (MOBILE & IPAD) */}
+      <section className="relative h-[40vh] lg:hidden w-full overflow-hidden bg-[#fff0f3] flex items-center justify-center pointer-events-none mt-12">
+        <div className="relative w-full max-w-4xl h-full flex items-center justify-center px-4 py-8">
+          <img
+            src="/pictures/hello.png"
+            alt="Hello"
+            className="w-full h-auto max-h-[40vh] object-contain select-none pointer-events-none"
+            draggable="false"
           />
-          {/* Foolproof Watermark Masks matching the background color (Enlarged to account for downscaling) */}
+        </div>
+      </section>
+
+      {/* SECTION 0: SPLINE 3D HERO (DESKTOP ONLY) */}
+      <section className="relative hidden lg:flex h-screen w-full overflow-hidden bg-[#fff0f3] items-center justify-center">
+        <div className="relative w-full h-full z-0 pointer-events-auto bg-transparent origin-center flex-shrink-0">
+          <Suspense fallback={<div className="absolute inset-0 flex items-center justify-center text-pink-500 font-mono text-sm tracking-widest animate-pulse z-10 select-none pointer-events-none">[ Loading 3D... ]</div>}>
+            <Spline 
+              scene="https://prod.spline.design/636LGSUiulrIAocV/scene.splinecode?v=9" 
+              style={{ backgroundColor: 'transparent', width: '100%', height: '100%' }} 
+            />
+          </Suspense>
+          {/* Foolproof Watermark Masks matching the background color */}
           <div className="absolute top-0 right-0 w-[400px] h-[200px] bg-[#fff0f3] z-[40] pointer-events-none"></div>
           <div className="absolute bottom-0 right-0 w-[400px] h-[200px] bg-[#fff0f3] z-[40] pointer-events-none"></div>
         </div>
       </section>
 
       {/* SECTION 1: HERO */}
-      <section id="intro-section" className="relative flex flex-col items-center justify-center px-6 py-12 md:py-24 text-center bg-[#fff0f3]">
+      <section id="intro-section" className="relative flex flex-col items-center justify-center px-6 pt-4 pb-12 md:py-24 text-center bg-[#fff0f3]">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
