@@ -240,14 +240,21 @@ function App() {
 
       {/* SECTION 0: HERO IMAGE */}
       <section className="relative h-[40vh] md:h-[60vh] xl:h-[70vh] w-full overflow-hidden bg-[#fff0f3] flex items-center justify-center pointer-events-none mt-12 md:mt-20">
-        <div className="relative w-full max-w-5xl h-full flex items-center justify-center px-4 py-8">
-          <img
+        <motion.div 
+          className="relative w-full max-w-5xl h-full flex items-center justify-center px-4 py-8"
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <motion.img
             src="/pictures/hello.png"
             alt="Hello"
             className="w-full h-auto max-h-[40vh] md:max-h-[60vh] xl:max-h-[70vh] object-contain select-none pointer-events-none"
             draggable="false"
+            animate={{ y: [0, -15, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
           />
-        </div>
+        </motion.div>
       </section>
 
       {/* SECTION 1: HERO */}
