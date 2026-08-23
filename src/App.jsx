@@ -1,9 +1,7 @@
-import { useState, useEffect, Suspense, lazy } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart, Download, Send, ArrowLeft, CheckCircle, Copy, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import confetti from 'canvas-confetti';
-
-const Spline = lazy(() => import('@splinetool/react-spline'));
 
 const playSound = (soundPath) => {
   const audio = new Audio(soundPath);
@@ -240,30 +238,15 @@ function App() {
         </div>
       </motion.header>
 
-      {/* SECTION 0: HERO IMAGE (MOBILE & IPAD) */}
-      <section className="relative h-[40vh] xl:hidden w-full overflow-hidden bg-[#fff0f3] flex items-center justify-center pointer-events-none mt-12">
-        <div className="relative w-full max-w-4xl h-full flex items-center justify-center px-4 py-8">
+      {/* SECTION 0: HERO IMAGE */}
+      <section className="relative h-[40vh] md:h-[60vh] xl:h-[70vh] w-full overflow-hidden bg-[#fff0f3] flex items-center justify-center pointer-events-none mt-12 md:mt-20">
+        <div className="relative w-full max-w-5xl h-full flex items-center justify-center px-4 py-8">
           <img
             src="/pictures/hello.png"
             alt="Hello"
-            className="w-full h-auto max-h-[40vh] object-contain select-none pointer-events-none"
+            className="w-full h-auto max-h-[40vh] md:max-h-[60vh] xl:max-h-[70vh] object-contain select-none pointer-events-none"
             draggable="false"
           />
-        </div>
-      </section>
-
-      {/* SECTION 0: SPLINE 3D HERO (DESKTOP ONLY) */}
-      <section className="relative hidden xl:flex h-screen w-full overflow-hidden bg-[#fff0f3] items-center justify-center">
-        <div className="relative w-full h-full z-0 pointer-events-auto bg-transparent origin-center flex-shrink-0">
-          <Suspense fallback={<div className="absolute inset-0 flex items-center justify-center text-pink-500 font-mono text-sm tracking-widest animate-pulse z-10 select-none pointer-events-none">[ Loading 3D... ]</div>}>
-            <Spline 
-              scene="https://prod.spline.design/636LGSUiulrIAocV/scene.splinecode?v=9" 
-              style={{ backgroundColor: 'transparent', width: '100%', height: '100%' }} 
-            />
-          </Suspense>
-          {/* Foolproof Watermark Masks matching the background color */}
-          <div className="absolute top-0 right-0 w-[400px] h-[200px] bg-[#fff0f3] z-[40] pointer-events-none"></div>
-          <div className="absolute bottom-0 right-0 w-[400px] h-[200px] bg-[#fff0f3] z-[40] pointer-events-none"></div>
         </div>
       </section>
 
