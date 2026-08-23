@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart, Download, Send, ArrowLeft, CheckCircle, Copy, RotateCcw } from 'lucide-react';
+import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart, Download, Send, ArrowLeft, CheckCircle, Copy, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import Spline from '@splinetool/react-spline';
 
 const playSound = (soundPath) => {
   const audio = new Audio(soundPath);
@@ -26,6 +27,14 @@ function App() {
   const [hasWon, setHasWon] = useState(() => {
     try {
       const saved = localStorage.getItem('hasWon');
+      return saved ? JSON.parse(saved) : false;
+    } catch (e) {
+      return false;
+    }
+  });
+  const [isMuted, setIsMuted] = useState(() => {
+    try {
+      const saved = localStorage.getItem('isMuted');
       return saved ? JSON.parse(saved) : false;
     } catch (e) {
       return false;
@@ -85,7 +94,7 @@ function App() {
   const handleObjectClick = (objectId) => {
     setActiveModal(objectId);
     if (objectId !== 'me' && !foundObjects.includes(objectId)) {
-      playSound('/audio/bubble_pop.mp3');
+      if (!isMuted) playSound('/audio/bubble_pop.mp3');
       setFoundObjects(prev => {
         const next = [...prev, objectId];
         localStorage.setItem('foundObjects', JSON.stringify(next));
@@ -109,10 +118,38 @@ function App() {
   }, [hasWon]);
 
   useEffect(() => {
+    localStorage.setItem('isMuted', JSON.stringify(isMuted));
+  }, [isMuted]);
+
+  // Aggressive Watermark Hunter
+  useEffect(() => {
+    const removeWatermark = () => {
+      // Find any anchor tag pointing to spline
+      const links = document.querySelectorAll('a');
+      links.forEach(link => {
+        if (link.href.includes('spline.design') || link.innerHTML.includes('Built with Spline')) {
+          link.remove();
+        }
+      });
+      // Catch any shadow DOM elements just in case
+      const splineViewers = document.querySelectorAll('spline-viewer');
+      splineViewers.forEach(viewer => {
+        if (viewer.shadowRoot) {
+          const logo = viewer.shadowRoot.querySelector('#logo');
+          if (logo) logo.remove();
+        }
+      });
+    };
+
+    const interval = setInterval(removeWatermark, 500);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
     if (foundObjects.length === 5 && !activeModal && !hasWon) {
       setHasWon(true);
       setActiveModal('victory');
-      playSound('/audio/winning_sound.mp3');
+      if (!isMuted) playSound('/audio/winning_sound.mp3');
 
       const duration = 3 * 1000;
       const end = Date.now() + duration;
@@ -224,11 +261,23 @@ function App() {
         </div>
       </motion.header>
 
+      {/* SECTION 0: SPLINE HERO */}
+      <section className="relative h-screen w-full overflow-hidden bg-[#fff0f3]">
+        {/* Expand outward equally in all directions to keep it centered while hiding the bottom-right corner */}
+        <div className="absolute w-[calc(100%+300px)] h-[calc(100%+200px)] -left-[150px] -top-[100px] z-0 pointer-events-auto bg-transparent">
+          <Spline 
+            scene="https://prod.spline.design/636LGSUiulrIAocV/scene.splinecode?v=5" 
+            style={{ backgroundColor: 'transparent', width: '100%', height: '100%' }} 
+          />
+        </div>
+      </section>
+
       {/* SECTION 1: HERO */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center p-6 text-center">
+      <section id="intro-section" className="relative flex flex-col items-center justify-center px-6 py-12 md:py-24 text-center bg-[#fff0f3]">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="max-w-3xl"
         >
@@ -250,10 +299,11 @@ function App() {
 
         {/* Scroll Call to Action */}
         <motion.div
-          className="absolute bottom-12 flex flex-col items-center opacity-70"
+          className="mt-12 flex flex-col items-center opacity-70 cursor-pointer"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.7 }}
           transition={{ delay: 1, duration: 1 }}
+          onClick={() => document.getElementById('game-section').scrollIntoView({ behavior: 'smooth' })}
         >
           <span className="text-sm uppercase tracking-widest font-semibold mb-2 text-pink-500">
             Scroll down to enter the room
@@ -268,7 +318,7 @@ function App() {
       </section>
 
       {/* SECTION 2: THE ROOM */}
-      <section className="relative min-h-screen flex flex-col items-center justify-start pt-16 sm:justify-center sm:pt-4 sm:py-8 overflow-hidden">
+      <section id="game-section" className="relative min-h-screen flex flex-col items-center justify-start pt-16 sm:justify-center sm:pt-4 sm:py-8 overflow-hidden">
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -309,6 +359,14 @@ function App() {
                       <span className="text-xs sm:text-sm font-bold text-gray-900 bg-white px-2 py-0.5 rounded-full shadow-sm border border-pink-200">
                         {foundObjects.length} / 5
                       </span>
+                      <button
+                        onClick={() => setIsMuted(!isMuted)}
+                        className="p-1 text-gray-400 hover:text-pink-600 transition-colors rounded-full hover:bg-pink-100/50 cursor-pointer ml-1"
+                        title={isMuted ? "Unmute sounds" : "Mute sounds"}
+                        aria-label="Toggle sound"
+                      >
+                        {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                      </button>
                       <button
                         onClick={handleResetGame}
                         className="p-1 text-gray-400 hover:text-pink-600 transition-colors rounded-full hover:bg-pink-100/50 cursor-pointer ml-0.5"
@@ -436,6 +494,14 @@ function App() {
                   <span className="text-xs font-bold text-gray-900 bg-white px-2 py-0.5 rounded-full shadow-sm border border-pink-200">
                     {foundObjects.length} / 5
                   </span>
+                  <button
+                    onClick={() => setIsMuted(!isMuted)}
+                    className="p-1 text-gray-400 hover:text-pink-600 transition-colors rounded-full hover:bg-pink-100/50 cursor-pointer ml-1"
+                    title={isMuted ? "Unmute sounds" : "Mute sounds"}
+                    aria-label="Toggle sound"
+                  >
+                    {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                  </button>
                   <button
                     onClick={handleResetGame}
                     className="p-1 text-gray-400 hover:text-pink-600 transition-colors rounded-full hover:bg-pink-100/50 cursor-pointer ml-0.5"

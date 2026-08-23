@@ -23,3 +23,12 @@ h1, h2, h3, h4, h5, h6, .font-display {
     @apply drop-shadow-[0_0_15px_rgba(255,182,193,1)];
   }
 }
+
+/* Hide Spline watermark logo */
+canvas + a, 
+a[href*="spline.design"] {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
