@@ -3,6 +3,14 @@ import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-
 import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart, Download, Send, ArrowLeft, CheckCircle, Copy, RotateCcw } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
+const playSound = (soundPath) => {
+  const audio = new Audio(soundPath);
+  audio.volume = 0.4;
+  audio.play().catch((err) => {
+    console.warn("Audio playback failed:", err);
+  });
+};
+
 function App() {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
@@ -77,6 +85,7 @@ function App() {
   const handleObjectClick = (objectId) => {
     setActiveModal(objectId);
     if (objectId !== 'me' && !foundObjects.includes(objectId)) {
+      playSound('/audio/bubble_pop.mp3');
       setFoundObjects(prev => {
         const next = [...prev, objectId];
         localStorage.setItem('foundObjects', JSON.stringify(next));
@@ -103,6 +112,7 @@ function App() {
     if (foundObjects.length === 5 && !activeModal && !hasWon) {
       setHasWon(true);
       setActiveModal('victory');
+      playSound('/audio/winning_sound.mp3');
 
       const duration = 3 * 1000;
       const end = Date.now() + duration;
