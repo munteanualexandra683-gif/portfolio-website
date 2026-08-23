@@ -241,7 +241,7 @@ function App() {
       </motion.header>
 
       {/* SECTION 0: HERO IMAGE (MOBILE & IPAD) */}
-      <section className="relative h-[40vh] lg:hidden w-full overflow-hidden bg-[#fff0f3] flex items-center justify-center pointer-events-none mt-12">
+      <section className="relative h-[40vh] xl:hidden w-full overflow-hidden bg-[#fff0f3] flex items-center justify-center pointer-events-none mt-12">
         <div className="relative w-full max-w-4xl h-full flex items-center justify-center px-4 py-8">
           <img
             src="/pictures/hello.png"
@@ -253,7 +253,7 @@ function App() {
       </section>
 
       {/* SECTION 0: SPLINE 3D HERO (DESKTOP ONLY) */}
-      <section className="relative hidden lg:flex h-screen w-full overflow-hidden bg-[#fff0f3] items-center justify-center">
+      <section className="relative hidden xl:flex h-screen w-full overflow-hidden bg-[#fff0f3] items-center justify-center">
         <div className="relative w-full h-full z-0 pointer-events-auto bg-transparent origin-center flex-shrink-0">
           <Suspense fallback={<div className="absolute inset-0 flex items-center justify-center text-pink-500 font-mono text-sm tracking-widest animate-pulse z-10 select-none pointer-events-none">[ Loading 3D... ]</div>}>
             <Spline 
