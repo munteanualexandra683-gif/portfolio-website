@@ -121,29 +121,7 @@ function App() {
     localStorage.setItem('isMuted', JSON.stringify(isMuted));
   }, [isMuted]);
 
-  // Aggressive Watermark Hunter
-  useEffect(() => {
-    const removeWatermark = () => {
-      // Find any anchor tag pointing to spline
-      const links = document.querySelectorAll('a');
-      links.forEach(link => {
-        if (link.href.includes('spline.design') || link.innerHTML.includes('Built with Spline')) {
-          link.remove();
-        }
-      });
-      // Catch any shadow DOM elements just in case
-      const splineViewers = document.querySelectorAll('spline-viewer');
-      splineViewers.forEach(viewer => {
-        if (viewer.shadowRoot) {
-          const logo = viewer.shadowRoot.querySelector('#logo');
-          if (logo) logo.remove();
-        }
-      });
-    };
 
-    const interval = setInterval(removeWatermark, 500);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     if (foundObjects.length === 5 && !activeModal && !hasWon) {
@@ -262,13 +240,18 @@ function App() {
       </motion.header>
 
       {/* SECTION 0: SPLINE HERO */}
-      <section className="relative h-screen w-full overflow-hidden bg-[#fff0f3]">
-        {/* Expand outward equally in all directions to keep it centered while hiding the bottom-right corner */}
-        <div className="absolute w-[calc(100%+300px)] h-[calc(100%+200px)] -left-[150px] -top-[100px] z-0 pointer-events-auto bg-transparent">
+      <section className="relative h-[60vh] md:h-screen w-full overflow-hidden bg-[#fff0f3] flex items-center justify-center">
+        {/* On mobile, we force a massive square aspect ratio (300vw) so Spline renders it wide.
+            Then we scale it down to 30% so it only takes up 90% of your screen width.
+            This guarantees it fits perfectly with nice breathing room on the sides! */}
+        <div className="relative w-[300vw] h-[300vw] max-w-none scale-[0.3] sm:w-[200vw] sm:h-[200vw] sm:scale-[0.45] md:w-full md:h-full md:scale-100 z-0 pointer-events-auto bg-transparent origin-center flex-shrink-0">
           <Spline 
-            scene="https://prod.spline.design/636LGSUiulrIAocV/scene.splinecode?v=5" 
+            scene="https://prod.spline.design/636LGSUiulrIAocV/scene.splinecode?v=8" 
             style={{ backgroundColor: 'transparent', width: '100%', height: '100%' }} 
           />
+          {/* Foolproof Watermark Masks matching the background color (Enlarged to account for downscaling) */}
+          <div className="absolute top-0 right-0 w-[400px] h-[200px] bg-[#fff0f3] z-[40] pointer-events-none"></div>
+          <div className="absolute bottom-0 right-0 w-[400px] h-[200px] bg-[#fff0f3] z-[40] pointer-events-none"></div>
         </div>
       </section>
 
