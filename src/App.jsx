@@ -240,7 +240,7 @@ function App() {
 
       {/* SECTION 0: HERO IMAGE */}
       <section className="relative h-[40vh] md:h-[60vh] xl:h-[70vh] w-full overflow-hidden bg-[#fff0f3] flex items-center justify-center pointer-events-none mt-12 md:mt-20">
-        <motion.div 
+        <motion.div
           className="relative w-full max-w-5xl h-full flex items-center justify-center px-4 py-8"
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -822,7 +822,7 @@ function App() {
                       <h4 className="text-xl font-bold text-gray-900">
                         Erasmus+ Participant
                       </h4>
-                      <span className="text-pink-500 font-bold">Organization: European Commission</span>
+                      <span className="text-pink-500 font-bold">European Commission</span>
                     </div>
                     <div className="mt-1 sm:mt-0">
                       <span className="text-gray-600 bg-white/50 px-3 py-1 rounded-full text-xs border border-pink-100 shadow-sm font-mono tracking-tight">
@@ -871,7 +871,7 @@ function App() {
                       <h4 className="text-xl font-bold text-gray-900">
                         Youth Ambassador & Volunteer
                       </h4>
-                      <span className="text-pink-500 font-bold">Organization: ThinkUp Academy</span>
+                      <span className="text-pink-500 font-bold">ThinkUp Academy</span>
                     </div>
                     <div className="mt-1 sm:mt-0">
                       <span className="text-gray-600 bg-white/50 px-3 py-1 rounded-full text-xs border border-pink-100 shadow-sm font-mono tracking-tight">
@@ -908,13 +908,13 @@ function App() {
                 </div>
 
                 {/* Role 3 */}
-                <div>
+                <div className="border-b border-pink-100 pb-5 mb-5">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
                     <div>
                       <h4 className="text-xl font-bold text-gray-900">
                         Volunteer & Mentor
                       </h4>
-                      <span className="text-pink-500 font-bold">Organization: Ajungem MARI</span>
+                      <span className="text-pink-500 font-bold">Ajungem MARI</span>
                     </div>
                     <div className="mt-1 sm:mt-0">
                       <span className="text-gray-600 bg-white/50 px-3 py-1 rounded-full text-xs border border-pink-100 shadow-sm font-mono tracking-tight">
@@ -952,6 +952,34 @@ function App() {
                           </p>
                         </li>
                       </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Role 4 */}
+                <div>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2">
+                    <div>
+                      <h4 className="text-xl font-bold text-gray-900">
+                        University Events Volunteering
+                      </h4>
+                      <span className="text-pink-500 font-bold">Faculty of Engineering in Foreign Languages</span>
+                    </div>
+                  </div>
+                  <div className="space-y-4 mt-3">
+                    <div className="flex items-start">
+                      <span className="text-pink-500 mt-0.5 mr-2 shrink-0">▹</span>
+                      <p className="text-gray-700 text-sm leading-relaxed">
+                        Active volunteer representing the Faculty of Engineering in Foreign Languages at major university tech and educational exhibitions.
+                      </p>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-4 mt-4">
+                      <div className="flex-1 rounded-xl overflow-hidden border border-pink-100 shadow-sm bg-white">
+                        <img src="/pictures/vol1.png" alt="Volunteering Event 1" className="w-full h-auto" />
+                      </div>
+                      <div className="flex-1 rounded-xl overflow-hidden border border-pink-100 shadow-sm bg-white">
+                        <img src="/pictures/vol2.png" alt="Volunteering Event 2" className="w-full h-auto" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1141,7 +1169,7 @@ function App() {
                           </span>
                         </div>
                       </div>
-                      
+
                       <p className="text-gray-600 font-medium leading-relaxed">
                         Engineered a digital sticky-note board built on an infinite canvas to deliver a highly fluid and tactile user experience.
                       </p>
