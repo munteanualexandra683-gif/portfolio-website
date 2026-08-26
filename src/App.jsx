@@ -277,7 +277,7 @@ function App() {
             ))}
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
-            I am a <span className="text-pink-500 font-medium">computer engineering student</span> bridging the gap between <span className="text-pink-500 font-medium">hardware logic</span> and <span className="text-pink-500 font-medium">web creativity</span>. I have turned my background, projects, and qualifications into an interactive space.
+            I am a <span className="text-pink-500 font-medium">computer engineering student</span> bridging the gap between <span className="text-pink-500 font-medium">web creativity</span> and <span className="text-pink-500 font-medium">hardware logic</span>. I have turned my background, projects, and qualifications into an interactive space.
             <span className="block mt-4 text-pink-500 font-medium">Step inside and take a look around!</span>
           </p>
         </motion.div>
