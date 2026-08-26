@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart, Download, Send, ArrowLeft, CheckCircle, Copy, RotateCcw, Volume2, VolumeX } from 'lucide-react';
+import { ChevronDown, Code, Briefcase, Mail, FileText, X, GraduationCap, Monitor, Cpu, Eye, ExternalLink, Heart, Download, Send, ArrowLeft, CheckCircle, Copy, RotateCcw, Volume2, VolumeX, StickyNote } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const playSound = (soundPath) => {
@@ -1115,6 +1115,73 @@ function App() {
                           src="/pictures/websitepic.webp"
                           alt="Accessibility Demo UI"
                           className="w-full h-full object-cover object-top"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* PROJECT 3 */}
+                <div className="relative border-t border-pink-200 pt-12 pb-6">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#fff0f3] px-4 text-pink-400 text-sm font-mono tracking-widest uppercase font-bold">
+                    Project 03
+                  </div>
+
+                  <div className="flex flex-col lg:flex-row gap-8">
+                    {/* Left Column: Text */}
+                    <div className="flex-1 space-y-4">
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+                        <h4 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                          <StickyNote className="w-6 h-6 text-pink-500 shrink-0" />
+                          Stickee
+                        </h4>
+                        <div className="mt-1 sm:mt-0">
+                          <span className="text-pink-600 bg-pink-100 px-3 py-1 rounded-full text-xs font-mono tracking-tight font-bold whitespace-nowrap">
+                            In Development
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <p className="text-gray-600 font-medium leading-relaxed">
+                        Engineered a digital sticky-note board built on an infinite canvas to deliver a highly fluid and tactile user experience.
+                      </p>
+
+                      {/* Tech Badges */}
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        {['React / Vite', 'TypeScript', 'Framer Motion', 'UI/UX Physics'].map(tech => (
+                          <span key={tech} className="bg-white border border-pink-100 shadow-sm text-pink-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="space-y-4 pt-4 border-t border-pink-100/60">
+                        <div>
+                          <span className="font-bold text-gray-800 text-sm uppercase tracking-wider block mb-1">Infinite Canvas Architecture</span>
+                          <p className="text-gray-600 text-sm leading-relaxed">Engineered an endless workspace with free pan and zoom capabilities, allowing users to dynamically create, edit, and color-code digital sticky notes.</p>
+                        </div>
+                        <div>
+                          <span className="font-bold text-gray-800 text-sm uppercase tracking-wider block mb-1">Tactile Physics Integration</span>
+                          <p className="text-gray-600 text-sm leading-relaxed">Implemented smooth drag-and-drop mechanics and gesture interactions to ensure UI elements feel grounded and highly responsive.</p>
+                        </div>
+                        <div className="bg-pink-50/50 p-4 rounded-xl border border-pink-100 mt-2">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="bg-pink-500 text-white text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full">Roadmap</span>
+                          </div>
+                          <p className="text-gray-700 text-sm leading-relaxed">
+                            Will integrate real-time multiplayer synchronization, rich media elements (photos, pins, stickers), and custom theming, with plans to eventually package the application for native Mac and Windows deployment.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right Column: Visuals */}
+                    <div className="lg:w-[45%] flex flex-col gap-4">
+                      <div className="aspect-video bg-white/60 rounded-xl border border-pink-100 shadow-sm flex items-center justify-center relative overflow-hidden group">
+                        <img
+                          src="/pictures/stickee.png"
+                          alt="Stickee UI"
+                          className="w-full h-full object-cover object-center scale-[1.35] origin-center"
                         />
                       </div>
                     </div>
