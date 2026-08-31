@@ -1289,37 +1289,37 @@ function App() {
                       className="flex flex-col gap-4"
                     >
                       <a href="https://github.com/munteanualexandra683-gif" target="_blank" rel="noreferrer" className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
-                        <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                        <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors shrink-0">
                           <Code className="w-6 h-6" />
                         </div>
-                        <div>
-                          <h4 className="font-bold text-gray-900">GitHub</h4>
-                          <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors">munteanualexandra683-gif</span>
+                        <div className="min-w-0 flex-1">
+                          <h4 className="font-bold text-gray-900 truncate">GitHub</h4>
+                          <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">munteanualexandra683-gif</span>
                         </div>
                       </a>
 
                       <a href="https://www.linkedin.com/in/alexandra-munteanu-5aa485291/" target="_blank" rel="noreferrer" className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
-                        <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                        <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors shrink-0">
                           <Briefcase className="w-6 h-6" />
                         </div>
-                        <div>
-                          <h4 className="font-bold text-gray-900">LinkedIn</h4>
+                        <div className="min-w-0 flex-1">
+                          <h4 className="font-bold text-gray-900 truncate">LinkedIn</h4>
                           <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">Alexandra Munteanu</span>
                         </div>
                       </a>
 
                       <div className="flex flex-row items-center w-full p-2 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md transition-all group">
-                        <button onClick={() => setShowContactForm(true)} className="flex items-center text-left flex-1 gap-4 p-2 cursor-pointer rounded-lg hover:bg-pink-50/50 transition-colors">
-                          <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                        <button onClick={() => setShowContactForm(true)} className="flex items-center text-left flex-1 min-w-0 gap-4 p-2 cursor-pointer rounded-lg hover:bg-pink-50/50 transition-colors">
+                          <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors shrink-0">
                             <Mail className="w-6 h-6" />
                           </div>
-                          <div>
-                            <h4 className="font-bold text-gray-900">Email Me</h4>
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-bold text-gray-900 truncate">Email Me</h4>
                             <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">Send a message directly</span>
                           </div>
                         </button>
-                        <div className="w-px h-10 bg-pink-100 mx-1"></div>
-                        <button onClick={handleCopyEmail} className="p-3 mr-1 text-gray-400 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-colors group/copy relative" aria-label="Copy email address">
+                        <div className="w-px h-10 bg-pink-100 mx-1 shrink-0"></div>
+                        <button onClick={handleCopyEmail} className="p-3 mr-1 text-gray-400 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-colors group/copy relative shrink-0" aria-label="Copy email address">
                           {copiedEmail ? <CheckCircle className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5" />}
                           <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-mono bg-gray-800 text-white px-2 py-1 rounded opacity-0 group-hover/copy:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
                             {copiedEmail ? "Copied!" : "Copy"}
@@ -1328,11 +1328,11 @@ function App() {
                       </div>
 
                       <a href="/alexandra_munteanu_resume.pdf" download="Alexandra_Munteanu_Resume.pdf" className="flex items-center gap-4 p-4 rounded-xl border border-pink-100 bg-white shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group">
-                        <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                        <div className="bg-pink-50 text-pink-500 p-3 rounded-lg group-hover:bg-pink-500 group-hover:text-white transition-colors shrink-0">
                           <FileText className="w-6 h-6" />
                         </div>
-                        <div>
-                          <h4 className="font-bold text-gray-900">Resume</h4>
+                        <div className="min-w-0 flex-1">
+                          <h4 className="font-bold text-gray-900 truncate">Resume</h4>
                           <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">Download PDF</span>
                         </div>
                       </a>
