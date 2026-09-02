@@ -1506,9 +1506,7 @@ function App() {
 
       {/* FOOTER */}
       <footer className="w-full py-8 text-center bg-[#fff0f3] flex flex-col items-center justify-center gap-2 relative z-10 border-t border-pink-100/50">
-        <p className="text-sm font-medium text-gray-500 tracking-wide">
-          Designed & Built by <span className="text-pink-500 font-bold">Alexandra Munteanu</span>
-        </p>
+
         <p className="text-xs text-gray-400 font-mono">
           © {new Date().getFullYear()} Crafted with React, Tailwind CSS, and Framer Motion
         </p>
