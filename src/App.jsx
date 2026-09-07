@@ -1201,6 +1201,22 @@ function App() {
                           </p>
                         </div>
                       </div>
+
+                      {/* Live Demo CTA */}
+                      <div className="pt-6">
+                        <a
+                          href="https://stickee-phi.vercel.app/"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-bold py-2.5 px-6 rounded-full transition-transform hover:-translate-y-0.5 shadow-md hover:shadow-lg"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Try Stickee out!
+                        </a>
+                        <p className="text-xs text-gray-500 mt-3 ml-2 max-w-sm">
+                          Jump onto the board, play around with the physics, and start plotting your ideas.
+                        </p>
+                      </div>
                     </div>
 
                     {/* Right Column: Visuals */}
