@@ -1331,7 +1331,7 @@ function App() {
                           </div>
                           <div className="min-w-0 flex-1">
                             <h4 className="font-bold text-gray-900 truncate">Email Me</h4>
-                            <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">Send a message directly</span>
+                            <span className="text-sm text-gray-500 font-mono tracking-tight group-hover:text-pink-600 transition-colors truncate block">Send a message</span>
                           </div>
                         </button>
                         <div className="w-px h-10 bg-pink-100 mx-1 shrink-0"></div>
